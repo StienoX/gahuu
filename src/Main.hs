@@ -1,4 +1,4 @@
 module Main where
 
-main :: Int
+main :: IO ()
 main = undefined
