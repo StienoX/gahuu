@@ -10,7 +10,7 @@ toCoord :: FloatCoord -> Coord
 toCoord (x,y) = (round x, round y)
 
 platformHitbox :: Platform -> Hitbox
-platformHitbox platform = mkHitbox platform
+platformHitbox platform = MkHitbox platform
 
 data Chunk = MkChunk { 
   chunkId :: Int,
