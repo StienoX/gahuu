@@ -10,7 +10,6 @@ data GameState = MkGameState { chunks :: ActChunks
                              , enemies :: [AI]
                              , isPaused :: Bool
                              , seed :: Seed
-                             , deltaT :: Float
                              , keyPresses :: [Key]
                              }        
 -- Initial state of the game
