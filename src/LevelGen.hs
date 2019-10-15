@@ -2,9 +2,9 @@ module LevelGen where
 import Player
 
 type Seed = Float
-type FloatCoord = Float Float
-type Coord = Int Int
-type Platform = Coord Coord
+type FloatCoord = (Float, Float)
+type Coord = (Int, Int)
+type Platform = (Coord, Coord)
 
 toCoord :: FloatCoord -> Coord
 toCoord (x,y) = (round x, round y)
@@ -42,5 +42,8 @@ genPlatforms x _ = x
 
 --Checks if new chunks need to be generated and unload old chunks
 updateChunks :: Player -> ActChunks -> ActChunks
-updateChunks player chunks | floor . playerX player > (chunkUnloadPos (getChunk 0 chunks)) = updateChunks (genNextChunk chunks)
+updateChunks player chunks | floor . playerX > (chunkUnloadPos (getChunk 0 chunks)) = updateChunks (genNextChunk chunks)
                            | otherwise = chunks
+  where playerPos = pos player
+        playerPos :: FloatCoord -> Float   
+        playerX (x,_) = x

@@ -1,10 +1,11 @@
 module World where
+import LevelGen
 import Player
 import Ai
 import Io
 import Graphics.Gloss
 
-data GameState = MkGameState { chunks :: [Chunk]
+data GameState = MkGameState { chunks :: ActChunks
                              , player :: Player
                              , enemies :: [AI]
                              , isPaused :: Bool
@@ -12,7 +13,7 @@ data GameState = MkGameState { chunks :: [Chunk]
                              , deltaT :: Float
                              , keyPresses :: [Key]
                              }        
--- Initial state of the game              
+-- Initial state of the game
 initialState :: GameState
 initialState = undefined
 
