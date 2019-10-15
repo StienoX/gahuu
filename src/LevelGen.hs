@@ -6,20 +6,7 @@ type Platform = Int Int Int Int
 platformHitbox :: Platform -> Hitbox
 platformHitbox platform = getHitboxInt platform
 
-data Chunk = MkChunk Int Int Int Int Int [Platform] --id length rootPos endPos unloadPos [Platform]
-
-chunkId        :: Int 
-chunkId        (MkChunk x _ _ _ _ _) = x
-chunkLen       :: Int 
-chunkLen       (MkChunk _ x _ _ _ _) = x
-chunkRootPos   :: Int 
-chunkId        (MkChunk _ _ x _ _ _) = x
-chunkEndPos    :: Int 
-chunkEndPos    (MkChunk _ _ _ x _ _) = x
-chunkUnloadPos :: Int
-chunkUnloadPos (MkChunk _ _ _ _ x _) = x
-chunkPlatforms :: [Platform]
-chunkPlatforms (MkChunk _ _ _ _ _ x) = x
+data Chunk = MkChunk { chunkId :: Int, length :: Int, startPos :: Int, endPos :: Int, unloadPos :: Int, platforms :: [Platform] }
 
 type ActChunks = (Chunk,Chunk,Chunk)
 
