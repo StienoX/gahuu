@@ -2,26 +2,17 @@ module Player where
 import World
 import Io
 
-data Player = MkPlayer Float Float Float Float Hitbox Bool --x y vx vy
-type Hitbox = ((Int,Int),(Int,Int))
+data Player = MkPlayer { x :: Float, y :: Float, vx :: Float, vy :: Float, hitbox :: Hitbox, isDead :: Bool}
+data Hitbox = MkHitbox {start :: Coord, end :: Coord }
 
-makeHitboxInt   :: Int -> Int -> Int -> Int -> Hitbox
-makeHitBoxInt x y x2 y2  = ((x,y)(x2,y2))
 makeHitboxFloat :: Float -> Float -> Float -> Float -> Hitbox
-makeHitboxFloat x y x2 y2 = makeHitBoxInt (round x) (round y) (round x2) (round y2) 
+makeHitboxFloat x y x2 y2 = MkHitbox (round x) (round y) (round x2) (round y2) 
 
 collision :: Hitbox -> Hitbox -> Bool
 collision h1 h2 = undefined
 
---Gets the players x coord
-playerX :: Player -> Float
-playerX (MkPlayer x _ _ _ _ _) = x
-
-playerHitbox :: Player -> Hitbox
-playerHitbox (MkPlayer _ _ _ _ x _) = x
-
 playerCollision :: Player -> [Hitbox] -> Player
-playerCollision player chunks platforms = undefined
+playerCollision player hitboxes = undefined
 
 playerMove :: Key -> Player -> Float -> Player
 playerMove 'w' player deltaT = undefined

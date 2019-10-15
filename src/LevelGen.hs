@@ -2,11 +2,24 @@ module LevelGen where
 import Player
 
 type Seed = Float
-type Platform = Int Int Int Int
-platformHitbox :: Platform -> Hitbox
-platformHitbox platform = getHitboxInt platform
+type FloatCoord = Float Float
+type Coord = Int Int
+type Platform = Coord Coord
 
-data Chunk = MkChunk { chunkId :: Int, length :: Int, startPos :: Int, endPos :: Int, unloadPos :: Int, platforms :: [Platform] }
+toCoord :: FloatCoord -> Coord
+toCoord (x,y) = (round x, round y)
+
+platformHitbox :: Platform -> Hitbox
+platformHitbox platform = mkHitbox platform
+
+data Chunk = MkChunk { 
+  chunkId :: Int,
+  length :: Int,
+  startPos :: Int,
+  endPos :: Int,
+  unloadPos :: Int,
+  platforms :: [Platform]
+}
 
 type ActChunks = (Chunk,Chunk,Chunk)
 
