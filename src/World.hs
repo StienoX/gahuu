@@ -3,6 +3,7 @@ import LevelGen
 import Player
 import Ai
 import Io
+import Settings
 import Graphics.Gloss
 
 data GameState = MkGameState { chunks :: ActChunks
@@ -22,12 +23,14 @@ renderGame gs = case gs isPaused of
     True  -> pauseMenu ["Continue","Exit"]
     False -> running gs
 
+running :: GameState -> Picture
+running = undefined
 
-pauseMenu = undefined
-pauseBackground :: Picture
-pauseBackground = undefined
+pauseMenu buttons = Pictures [pauseBackgroundColor,pauseButtons buttons]
 pauseButtons :: [String] -> Picture
-pauseButtons = pictures map mkButton
-  where mkButton :: String -> [Picture] -> [Picture]
-        mkButton str pics = pics:(Text str) -- Moet nog coords krijgen geen idee nog hoe
+pauseButtons = Pictures map mkButton
+  where mkButton :: String -> Int -> [Picture] -> [Picture]
+        mkButton str y pics = map (Transpose 0 (-(y/2)*numButtons)) buttons 
+          where buttons = map (Translate 0 y) (pics:(Text str))
+                numButtons = length buttons
                     

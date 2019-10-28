@@ -28,7 +28,7 @@ getChunk :: ActChunks -> Int -> Chunk
 getChunk 0 (x,_,_) = x
 getChunk 1 (_,x,_) = x
 getChunk 2 (_,_,x) = x
-getChunk _ _ = error
+getChunk _ _ = error "Out of range"
 
 --Generates new chunk based of the previous chunk and the seed
 genNextChunk :: ActChunks -> Seed -> ActChunks
