@@ -11,8 +11,8 @@ data Player = MkPlayer {
   isDead :: Bool
 }
 data Hitbox = MkHitbox { 
-  start :: Coord,
-  end :: Coord 
+  start :: Coord, --topleft corner
+  end :: Coord    --bottomright corner
 }
 
 --Makes an hitbox from floats
@@ -20,7 +20,17 @@ makeHitboxFloat :: FloatCoord -> FloatCoord -> Hitbox
 makeHitboxFloat x y x2 y2 = MkHitbox (round x) (round y) (round x2) (round y2) 
 
 collision :: Hitbox -> Hitbox -> Bool
-collision h1 h2 = undefined
+collision h1 h2 | h1x1 > h1y1
+  where 
+    h1x1 = h' cx start h1
+    h1y1 = h' cy start h1
+    h1x2 = h' cx end h1
+    h1y2 = h' cy end h1
+    h2x1 = h' cx start h2
+    h2y1 = h' cy start h2
+    h2x2 = h' cx end h2
+    h2y2 = h' cy end h2
+    h' cf nf h = cf (nf h)
 
 --Checks player has collided with any of the hitboxes
 playerCollision :: Player -> [Hitbox] -> Player

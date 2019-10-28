@@ -3,7 +3,7 @@ import Player
 
 type Seed = Float
 type FloatCoord = (Float, Float)
-type Coord = (Int, Int)
+data Coord = Coord {cx :: Int, cy :: Int}
 type Platform = (Coord, Coord)
 
 toCoord :: FloatCoord -> Coord
