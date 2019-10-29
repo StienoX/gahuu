@@ -2,7 +2,7 @@ module LevelGen where
 import Player
 
 type Seed = Float
-type FloatCoord = (Float, Float)
+data FloatCoord = (Float, Float)
 data Coord = Coord {cx :: Int, cy :: Int}
 type Platform = (Coord, Coord)
 
