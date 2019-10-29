@@ -7,6 +7,6 @@ screenWith :: Int
 screenWith = 480
 
 backgroundColor :: Color
-backgroundColor = 255 255 255 255 --White
+backgroundColor = blue
 pauseBackgroundColor :: Color
-pauseBackgroundColor = 230 230 230 255 -- Grey
+pauseBackgroundColor = greyN 0.4
