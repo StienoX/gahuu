@@ -1,17 +1,14 @@
 module World where
-import LevelGen
-import Player
-import Ai
-import Io
 import Settings
 import Graphics.Gloss
+import Graphics.Gloss.Interface.Pure.Game
 
 data GameState = MkGameState { chunks :: ActChunks
                              , player :: Player
                              , enemies :: [AI]
                              , isPaused :: Bool
                              , seed :: Seed
-                             , keyPresses :: [Key]
+                             , keyPresses :: [EventKey]
                              }        
 -- Initial state of the game
 initialState :: GameState

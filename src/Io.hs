@@ -1,10 +1,14 @@
-module Io where
-import LevelGen
+{-# language NamedFieldPuns #-}
+
+module Io where 
+
+import Graphics.Gloss.Interface.Pure.Game
+
 type Key = Char
 
 --Get the keypresses from the player
-getKeyPresses :: IO [Key]
-getKeyPresses = undefined
+getKeyPress :: Event -> GameState -> IO GameState
+getKeyPress (EventKey key Down) GameState {keyPresses} = undefined
 
 --Impure view function
 view :: GameState -> IO Picture
