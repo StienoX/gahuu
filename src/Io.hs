@@ -3,6 +3,8 @@
 module Io where 
 
 import Graphics.Gloss.Interface.Pure.Game
+import World
+import Util
 
 type Key = Char
 

@@ -2,6 +2,10 @@ module World where
 import Settings
 import Graphics.Gloss
 import Graphics.Gloss.Interface.Pure.Game
+import Player
+import AI
+import Render
+import LevelGen
 
 data GameState = MkGameState { chunks :: ActChunks
                              , player :: Player

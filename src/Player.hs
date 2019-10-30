@@ -1,6 +1,4 @@
 module Player where
-import World
-import Io
 
 data Player = MkPlayer { 
   pos    :: FloatCoord,

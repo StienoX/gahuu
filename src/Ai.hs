@@ -1,5 +1,4 @@
 module Ai where
-import Player
 
 data AI_type = AI1 | AI2 | AI3 --Possible more types if needed
   deriving (Eq)

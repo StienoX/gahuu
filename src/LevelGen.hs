@@ -1,5 +1,5 @@
 module LevelGen where
-import Player
+import AI
 
 type Seed = Float
 data FloatCoord = (Float, Float)
