@@ -58,11 +58,18 @@ playerMove  _  player _                 = player
 playerCollided :: Player -> [Hitbox] -> Bool
 playerCollided player hitboxes = foldl (|| collision (hitbox player)) False hitboxes
 
+--Updates player based on gravity
 playerGravity :: Player -> Float -> [Hitbox] -> Player
-playerGravity player deltaT hitboxes | playerCollided updatedPlayer hitboxes 
+playerGravity player deltaT hitboxes | playerCollided updatedPlayer hitboxes = player
+                                     | otherwise                             = updatedPlayer
   where updatedPlayer = player {pos = (pos player - (0,deltaT*gravStrength))}
+
+--Checks if player is by an enemy
+playerHitEnemy :: Player -> [Hitbox] -> Player
+playerHitEnemy player enemies | playerCollided player enemies = player {isDead = True}
+                              | otherwise                     = player
 
 --Updates the player
 -- Player - Hitboxes - Enemies - Keypresses - deltaT -> Player
 updatePlayer :: Player -> [Hitbox] -> [Hitbox] -> EventKey -> Float -> Player
-updatePlater = undefined
+updatePlayer player hitboxes enemies eventkey deltaT = playerGravity (playerCollision (playerHitEnemy (playerMove eventkey deltaT) enemies) hitboxes) deltaT hitboxes
