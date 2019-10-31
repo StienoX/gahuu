@@ -1,10 +1,12 @@
 module Util where
 
+    import Graphics.Gloss.Interface.Pure.Game
+
     type Seed = Float 
     type Platform = (Coord, Coord)   
     type ActChunks = (Chunk,Chunk,Chunk)  
-    
     type FloatCoord = (Float, Float)
+
     data Coord = Coord {cx :: Int, cy :: Int}
 
     data GameState = MkGameState { chunks :: ActChunks
