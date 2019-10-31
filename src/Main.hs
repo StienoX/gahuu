@@ -1,6 +1,6 @@
 module Main where
 import Graphics.Gloss
-import Settings
+import Util
 import World
 
 window = InWindow "gahuu" (screenHeight,screenWith) (100,100)

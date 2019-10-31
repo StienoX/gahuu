@@ -1,6 +1,5 @@
 module Player where
 import Util
-import Settings
 import Graphics.Gloss.Interface.IO.Game
 
 

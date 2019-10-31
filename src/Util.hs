@@ -2,6 +2,23 @@ module Util where
 
     import Graphics.Gloss.Interface.Pure.Game
 
+    --Settings
+    screenHeight :: Int
+    screenHeight = 640
+    screenWith :: Int
+    screenWith = 480
+
+    backgroundColor :: Color
+    backgroundColor = blue
+    pauseBackgroundColor :: Color
+    pauseBackgroundColor = greyN 0.4
+    speedPlayer :: Float
+    speedPlayer = 1.0
+    jump :: Float
+    jump = 1.0
+    gravStrength :: Float
+    gravStrength = 1.0
+
     type Seed = Float 
     type Platform = (Coord, Coord)   
     type ActChunks = (Chunk,Chunk,Chunk)  
