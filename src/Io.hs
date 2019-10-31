@@ -2,12 +2,15 @@
 
 module Io where 
 
-import Graphics.Gloss.Interface.Pure.Game
+import Graphics.Gloss
+import Graphics.Gloss.Interface.IO.Game
+import System.Random
+--import Data.Time.Clock  "Hidden package"
 import Util
 
 --Get the keypresses from the player
 getKeyPress :: Event -> GameState -> IO GameState
-getKeyPress (EventKey key Down) GameState {keyPresses} = undefined
+getKeyPress e gs = return (gs {keyPresses = keyPresses gs ++ [e]})
 
 --Impure view function
 view :: GameState -> IO Picture
@@ -22,5 +25,5 @@ loadSave :: String -> IO GameState
 loadSave path = undefined
 
 --Get the systemtime
-getTime :: IO Float
+getTime :: IO Int
 getTime = undefined
