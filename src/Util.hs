@@ -60,3 +60,9 @@ module Util where
         unloadPos :: Int,
         platforms :: [Platform]
     }
+
+    posSub :: Num a => (a,a) -> (a,a) -> (a,a)
+    posSub (a,b) (c,d) = (a - c,b - d)
+    
+    posAdd :: Num a => (a,a) -> (a,a) -> (a,a)
+    posAdd (a,b) (c,d) = (a + c,b + d)
