@@ -3,10 +3,7 @@
 module Io where 
 
 import Graphics.Gloss.Interface.Pure.Game
-import World
 import Util
-
-type Key = Char
 
 --Get the keypresses from the player
 getKeyPress :: Event -> GameState -> IO GameState

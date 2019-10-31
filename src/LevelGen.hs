@@ -1,27 +1,13 @@
 module LevelGen where
-import AI
+import Util
 
-type Seed = Float
-data FloatCoord = (Float, Float)
-data Coord = Coord {cx :: Int, cy :: Int}
-type Platform = (Coord, Coord)
+
 
 toCoord :: FloatCoord -> Coord
 toCoord (x,y) = (round x, round y)
 
 platformHitbox :: Platform -> Hitbox
 platformHitbox platform = MkHitbox platform
-
-data Chunk = MkChunk { 
-  chunkId :: Int,
-  length :: Int,
-  startPos :: Int,
-  endPos :: Int,
-  unloadPos :: Int,
-  platforms :: [Platform]
-}
-
-type ActChunks = (Chunk,Chunk,Chunk)
 
 --Returns chunk based on index
 getChunk :: ActChunks -> Int -> Chunk

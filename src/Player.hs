@@ -1,17 +1,7 @@
 module Player where
+import Util
 
-data Player = Player { 
-  pos    :: FloatCoord,
-  vx     :: Float,
-  vy     :: Float,
-  vprev  :: Float,
-  hitbox :: Hitbox,
-  isDead :: Bool
-}
-data Hitbox = MkHitbox { 
-  start :: Coord,   --topleft corner
-  end   :: Coord    --bottomright corner
-}
+
 
 --Makes an hitbox from floats
 makeHitboxFloat :: FloatCoord -> FloatCoord -> Hitbox

@@ -1,9 +1,7 @@
-module Ai where
+module AI where
+import Util
 
-data AI_type = AI1 | AI2 | AI3 --Possible more types if needed
-  deriving (Eq)
-data AI aiType x y = MkAI AI_type FloatCoord Hitbox
-  deriving (Eq)
+
 
 --Processes the behavior for the provided ai
 processAI :: AI -> Float -> Player -> AI
