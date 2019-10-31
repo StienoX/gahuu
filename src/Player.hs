@@ -36,15 +36,15 @@ collision h1 h2 | h2x2 < h1x1 = False
 
 --Checks player has collided with any of the hitboxes
 playerCollision :: Player -> [Hitbox] -> Player
-playerCollision player hitboxes | playerCollided player hitboxes = player { pos = (((fst (player pos)) - (player vy)), ((snd (player pos)) - (player vy)))} --move player back based on vy/vgrav,vx
+playerCollision player hitboxes | playerCollided player hitboxes = getUpdatePosPlayer --move player back based on vy/vgrav,vx
                                 | otherwise = player
   where getUpdatePosPlayer | playerCollided playervx  hitboxes == False = playervx
                            | playerCollided playervy  hitboxes == False = playervy
                            | playerCollided playervxy hitboxes == False = playervxy
                            | otherwise = Error "Unabled to reposition player outside of hitbox, vx or vy not valid"
-        playervx  = player { pos = (player pos - (vx player,0))}
-        playervy  = player { pos = (player pos - (0,vy player))}
-        playervxy = player { pos = (player pos - (vx player ,vy player))}
+        playervx           = player { pos = (player pos - (vx player,0))}
+        playervy           = player { pos = (player pos - (0,vy player))}
+        playervxy          = player { pos = (player pos - (vx player ,vy player))}
 
 --Updates the player position based on the keypresses provided
 playerMove :: EventKey -> Player -> Float -> Player
