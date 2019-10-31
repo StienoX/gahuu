@@ -1,6 +1,6 @@
 module Player where
 
-data Player = MkPlayer { 
+data Player = Player { 
   pos    :: FloatCoord,
   vx     :: Float,
   vy     :: Float,
@@ -40,12 +40,12 @@ playerCollision player hitboxes | playerCollided player hitboxes = player { pos 
                                 | otherwise = player
 
 --Updates the player position based on the keypresses provided
-playerMove :: Key -> Player -> Float -> Player
-playerMove 'w' player deltaT = undefined
-playerMove 'a' player deltaT = undefined
-playerMove 's' player deltaT = undefined
-playerMove 'd' player deltaT = undefined
-playerMove  _  player _      = player
+playerMove :: EventKey -> Player -> Float -> Player
+playerMove ("w",Down,_,_) player deltaT | vy player == 0 = player {vprev = 0, vy = (player vy) + jump}
+                                        | otherwise      = player
+playerMove ("a",Down,_,_) player deltaT = player {pos = (player pos - (deltaT*speedPlayer),0),vx = deltaT*speedPlayer}
+playerMove ("d",Down,_,_) player deltaT = player {pos = (player pos + (deltaT*speedPlayer),0),vx = -deltaT*speedPlayer}
+playerMove  _  player _                 = player
 
 --Checks if player has collided with a hitbox
 playerCollided :: Player -> [Hitbox] -> Bool
@@ -53,5 +53,5 @@ playerCollided player hitboxes = foldl (|| collision (hitbox player)) False hitb
 
 --Updates the player
 -- Player - Hitboxes - Enemies - Keypresses - deltaT -> Player
-updatePlayer :: Player -> [Hitbox] -> [Hitbox] -> Key -> Float -> Player
+updatePlayer :: Player -> [Hitbox] -> [Hitbox] -> EventKey -> Float -> Player
 updatePlater = undefined

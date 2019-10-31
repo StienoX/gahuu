@@ -10,3 +10,7 @@ backgroundColor :: Color
 backgroundColor = blue
 pauseBackgroundColor :: Color
 pauseBackgroundColor = greyN 0.4
+speedPlayer :: Float
+speedPlayer = 1.0
+jump :: Float
+jump = 1.0
