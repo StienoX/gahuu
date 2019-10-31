@@ -1,5 +1,7 @@
 module Player where
 import Util
+import Settings
+import Graphics.Gloss.Interface.IO.Game
 
 
 
@@ -37,7 +39,7 @@ playerCollision player hitboxes | playerCollided player hitboxes = getUpdatePosP
         playervxy          = player { pos = (pos player - (vx player ,vy player)), vx = 0, vy = 0}
 
 --Updates the player position based on the keypresses provided
-playerMove :: EventKey -> Player -> Float -> Player
+playerMove :: Event -> Player -> Float -> Player
 playerMove ("w",Down,_,_) player deltaT | vy player == 0 = player {vprev = 0, vy = (vy player) + jump}
                                         | otherwise      = player
 playerMove ("a",Down,_,_) player deltaT = player {pos = (pos player - (deltaT*speedPlayer),0),vx = deltaT*speedPlayer}
@@ -61,5 +63,5 @@ playerHitEnemy player enemies | playerCollided player enemies = player {isDead =
 
 --Updates the player
 -- Player - Hitboxes - Enemies - Keypresses - deltaT -> Player
-updatePlayer :: Player -> [Hitbox] -> [Hitbox] -> EventKey -> Float -> Player
+updatePlayer :: Player -> [Hitbox] -> [Hitbox] -> Event -> Float -> Player
 updatePlayer player hitboxes enemies eventkey deltaT = playerGravity (playerCollision (playerHitEnemy (playerMove eventkey deltaT) enemies) hitboxes) deltaT hitboxes
