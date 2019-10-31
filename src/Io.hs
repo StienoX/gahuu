@@ -11,11 +11,11 @@ import Util
 
 --Get the keypresses from the player
 getKeyPress :: Event -> GameState -> IO GameState
-getKeyPress e gs = return (gs {keyPresses = keyPresses gs ++ [e]})
+getKeyPress e gs = return (gs {gKeyPresses = gKeyPresses gs ++ [e]})
 
 --Impure view function
 view :: GameState -> IO Picture
-view = return . viewPure
+view g = loadBMP "C:\\Users\\JellePrincipaal\\Documents\\Github\\gahuu\\src\\img" --return . viewPure
 
 --Pure view function
 viewPure :: GameState -> Picture
