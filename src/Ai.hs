@@ -1,4 +1,4 @@
-module AI where
+module Ai where
 import Util
 
 

@@ -3,7 +3,7 @@ import Settings
 import Graphics.Gloss
 import Graphics.Gloss.Interface.Pure.Game
 import Player
-import AI
+import Ai
 import Render
 import LevelGen
 import Util
