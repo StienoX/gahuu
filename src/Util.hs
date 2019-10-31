@@ -29,7 +29,6 @@ module Util where
     data AI_type = AI1 | AI2 | AI3 --Possible more types if needed
         deriving (Eq)
     data AI = MkAI AI_type FloatCoord Hitbox
-        deriving (Eq)
 
     data Hitbox = MkHitbox { 
         start :: Coord,   --topleft corner
