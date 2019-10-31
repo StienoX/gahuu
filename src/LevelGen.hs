@@ -3,14 +3,11 @@ import Util
 
 
 
-toCoord :: FloatCoord -> Coord
-toCoord (x,y) = (round x, round y)
-
 platformHitbox :: Platform -> Hitbox
-platformHitbox platform = MkHitbox platform
+platformHitbox (a,b) = MkHitbox a b
 
 --Returns chunk based on index
-getChunk :: ActChunks -> Int -> Chunk
+getChunk :: Int -> ActChunks -> Chunk
 getChunk 0 (x,_,_) = x
 getChunk 1 (_,x,_) = x
 getChunk 2 (_,_,x) = x
@@ -31,5 +28,5 @@ updateChunks :: Player -> ActChunks -> ActChunks
 updateChunks player chunks | floor . playerX > (chunkUnloadPos (getChunk 0 chunks)) = updateChunks (genNextChunk chunks)
                            | otherwise = chunks
   where playerPos = pos player
-        playerPos :: FloatCoord -> Float   
+        playerX :: FloatCoord -> Float   
         playerX (x,_) = x
