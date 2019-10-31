@@ -20,8 +20,8 @@ genNextChunk (_,x,prevChunk) seed = (x,prevChunk,genPlatforms newChunk seed)
 
 --Generates new platforms for a new chunk
 genPlatforms :: Chunk -> Seed -> Chunk
-genPlatforms (MkChunk chkId len rootPos endPos _ []) seed = undefined
-genPlatforms x _ = x
+--genPlatforms (MkChunk chkId len rootPos endPos _ []) seed = undefined
+genPlatforms = undefined
 
 --Checks if new chunks need to be generated and unload old chunks
 updateChunks :: Player -> ActChunks -> Seed -> ActChunks
