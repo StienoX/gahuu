@@ -42,21 +42,25 @@ playerCollision player hitboxes | playerCollided player hitboxes = getUpdatePosP
                            | playerCollided playervy  hitboxes == False = playervy
                            | playerCollided playervxy hitboxes == False = playervxy
                            | otherwise = Error "Unabled to reposition player outside of hitbox, vx or vy not valid"
-        playervx           = player { pos = (player pos - (vx player,0))}
-        playervy           = player { pos = (player pos - (0,vy player))}
-        playervxy          = player { pos = (player pos - (vx player ,vy player))}
+        playervx           = player { pos = (pos player - (vx player,0)), vx = 0}
+        playervy           = player { pos = (pos player - (0,vy player)), vy = 0}
+        playervxy          = player { pos = (pos player - (vx player ,vy player)), vx = 0, vy = 0}
 
 --Updates the player position based on the keypresses provided
 playerMove :: EventKey -> Player -> Float -> Player
-playerMove ("w",Down,_,_) player deltaT | vy player == 0 = player {vprev = 0, vy = (player vy) + jump}
+playerMove ("w",Down,_,_) player deltaT | vy player == 0 = player {vprev = 0, vy = (vy player) + jump}
                                         | otherwise      = player
-playerMove ("a",Down,_,_) player deltaT = player {pos = (player pos - (deltaT*speedPlayer),0),vx = deltaT*speedPlayer}
-playerMove ("d",Down,_,_) player deltaT = player {pos = (player pos + (deltaT*speedPlayer),0),vx = -deltaT*speedPlayer}
+playerMove ("a",Down,_,_) player deltaT = player {pos = (pos player - (deltaT*speedPlayer),0),vx = deltaT*speedPlayer}
+playerMove ("d",Down,_,_) player deltaT = player {pos = (pos player + (deltaT*speedPlayer),0),vx = -deltaT*speedPlayer}
 playerMove  _  player _                 = player
 
 --Checks if player has collided with a hitbox
 playerCollided :: Player -> [Hitbox] -> Bool
 playerCollided player hitboxes = foldl (|| collision (hitbox player)) False hitboxes
+
+playerGravity :: Player -> Float -> [Hitbox] -> Player
+playerGravity player deltaT hitboxes | playerCollided updatedPlayer hitboxes 
+  where updatedPlayer = player {pos = (pos player - (0,deltaT*gravStrength))}
 
 --Updates the player
 -- Player - Hitboxes - Enemies - Keypresses - deltaT -> Player

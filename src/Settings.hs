@@ -14,3 +14,5 @@ speedPlayer :: Float
 speedPlayer = 1.0
 jump :: Float
 jump = 1.0
+gravStrength :: Float
+gravStrength = 1.0
