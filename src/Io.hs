@@ -4,6 +4,7 @@ module Io where
 
 import Graphics.Gloss
 import Graphics.Gloss.Interface.IO.Game
+import Graphics.Gloss.Data.Bitmap
 import System.Random
 --import Data.Time.Clock  "Hidden package"
 import Util
@@ -27,3 +28,4 @@ loadSave path = undefined
 --Get the systemtime
 getTime :: IO Int
 getTime = undefined
+
