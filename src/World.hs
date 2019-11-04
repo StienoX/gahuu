@@ -11,7 +11,7 @@ import Util
       
 -- Initial state of the game
 initialState :: GameState
-initialState = undefined
+initialState = MkGameState Nothing Nothing Nothing Nothing 0.5 Nothing
 
 --Render game
 renderGame :: GameState -> Picture

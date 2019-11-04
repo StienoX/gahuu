@@ -4,8 +4,8 @@ module Io where
 
 import Graphics.Gloss
 import Graphics.Gloss.Interface.IO.Game
-import Graphics.Gloss.Data.Bitmap
-import System.Random
+--import Graphics.Gloss.Data.Bitmap
+--import System.Random
 --import Data.Time.Clock  "Hidden package"
 import Util
 
@@ -15,15 +15,15 @@ getKeyPress e gs = return (gs {gKeyPresses = gKeyPresses gs ++ [e]})
 
 --Impure view function
 view :: GameState -> IO Picture
-view g = loadBMP "C:\\Users\\JellePrincipaal\\Documents\\Github\\gahuu\\src\\img" --return . viewPure
+view g = return (viewPure g)
 
 --Pure view function
 viewPure :: GameState -> Picture
-viewPure gstate = undefined
+viewPure gstate = polygon [(gSeed gstate, 0), (0.5, 0.5), (0,0.5), (0, 0) ]
 
 --Loads save
 loadSave :: String -> IO GameState
-loadSave path = undefined
+loadSave path = undefined path
 
 --Get the systemtime
 getTime :: IO Int
