@@ -15,7 +15,7 @@ getKeyPress e gs = return (gs {gKeyPresses = gKeyPresses gs ++ [e]})
 
 --Impure view function
 view :: GameState -> IO Picture
-view g = return (viewPure g)
+view g = loadBMP "C:\\Users\\JellePrincipaal\\Documents\\Github\\gahuu\\src\\img\\Dirt.bmp"  -- return (viewPure g)
 
 --Pure view function
 viewPure :: GameState -> Picture
@@ -29,3 +29,6 @@ loadSave path = undefined path
 getTime :: IO Int
 getTime = undefined
 
+--Get the contents of a file
+getFile :: FilePath -> IO String
+getFile path = readFile path
