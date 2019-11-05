@@ -10,8 +10,8 @@ import Util
       
 -- Initial state of the game
 initialState :: GameState
-initialState = MkGameState Nothing Nothing Nothing Nothing 0.5 Nothing
-
+--initialState = MkGameState Nothing Nothing Nothing Nothing 0.5 Nothing
+initialState = undefined
 --Render game
 renderGame :: GameState -> Picture
 renderGame gs = case gIsPaused gs of
