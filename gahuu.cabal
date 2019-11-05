@@ -20,4 +20,5 @@ executable gahuu
     , gloss >=1.13
     , random
     , containers
+    , directory
   default-language: Haskell2010

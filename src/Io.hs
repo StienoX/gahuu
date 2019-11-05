@@ -2,6 +2,7 @@
 
 module Io where 
 
+import System.Directory
 import Graphics.Gloss
 import Graphics.Gloss.Interface.IO.Game
 --import Graphics.Gloss.Data.Bitmap
@@ -29,6 +30,6 @@ loadSave path = undefined path
 getTime :: IO Int
 getTime = undefined
 
---Get the contents of a file
-getFile :: FilePath -> IO String
-getFile path = readFile path
+--Get the contents of a file TOFIX
+--getFile :: IO FilePath -> IO String
+--getFile path = readFile (mappend getCurrentDirectory path)
