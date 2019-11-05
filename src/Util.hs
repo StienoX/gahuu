@@ -7,7 +7,12 @@ module Util where
     screenHeight = 640
     screenWith :: Int
     screenWith = 480
-
+    window :: Display
+    window = InWindow "gahuu" (screenHeight,screenWith) (100,100)
+    background :: Color
+    background = makeColor 255 255 255 255
+    fps :: Int
+    fps = 60
     backgroundColor :: Color
     backgroundColor = blue
     pauseBackgroundColor :: Color
@@ -19,6 +24,7 @@ module Util where
     gravStrength :: Float
     gravStrength = 1.0
 
+    --Types
     type Seed = Float 
     type Platform = (Coord, Coord)   
     type ActChunks = (Chunk,Chunk,Chunk)  
@@ -60,7 +66,8 @@ module Util where
         chunkUnloadPos :: Int,
         chunkPlatforms :: [Platform]
     }
-
+    
+    --Util functions
     toCoord :: FloatCoord -> Coord
     toCoord (x,y) = Coord {cx = round x, cy = round y}
 
@@ -72,3 +79,4 @@ module Util where
 
     posMul :: Num a => a -> (a,a) -> (a,a)
     posMul n (a,b) = (n * a,n * b)
+
