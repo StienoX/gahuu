@@ -30,8 +30,8 @@ loadSave path = undefined path
 getTime :: IO Int
 getTime = undefined
 
---Get the contents of a file TOFIX
-getFile :: FilePath -> IO String
-getFile path = do
+--Load file relative to executable
+loadFile :: (String -> IO a) -> String -> IO a
+loadFile f path = do
     filepath <- (mappend getCurrentDirectory (pure path))
-    readFile filepath
+    f filepath
