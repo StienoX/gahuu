@@ -69,3 +69,6 @@ module Util where
     
     posAdd :: Num a => (a,a) -> (a,a) -> (a,a)
     posAdd (a,b) (c,d) = (a + c,b + d)
+
+    posMul :: Num a => a -> (a,a) -> (a,a)
+    posMul n (a,b) = (n * a,n * b)
