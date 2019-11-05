@@ -21,6 +21,9 @@ renderGame gs = case gIsPaused gs of
 running :: GameState -> Picture
 running = undefined
 
+step :: Float -> GameState -> GameState
+step dT gs = gs
+
 pauseMenu = undefined
 --pauseMenu buttons = Pictures [(Picture pauseBackgroundColor),pauseButtons buttons]
 --pauseButtons :: [String] -> Picture

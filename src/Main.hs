@@ -1,5 +1,6 @@
 module Main where
 import Graphics.Gloss
+import Io
 import Util
 import World
 
@@ -9,4 +10,4 @@ background = makeColor 255 255 255 255
 fps = 60
 
 main :: IO ()
-main = play window background fps initialState gameAsPicture transfromGame animationFunction
+main = play window background fps initialState view getKeyPress step
