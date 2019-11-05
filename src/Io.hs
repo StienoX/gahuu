@@ -31,5 +31,7 @@ getTime :: IO Int
 getTime = undefined
 
 --Get the contents of a file TOFIX
---getFile :: IO FilePath -> IO String
---getFile path = readFile (mappend getCurrentDirectory path)
+getFile :: FilePath -> IO String
+getFile path = do
+    filepath <- (mappend getCurrentDirectory (pure path))
+    readFile filepath
