@@ -8,9 +8,9 @@ module Util where
     screenWith :: Int
     screenWith = 480
     screenWithHalf :: Int
-    screenWithHalf   = (screenWith   / 2)
-    screenWithHalf :: Int
-    screenHeightHalf = (screenHeight / 2)
+    screenWithHalf   = (screenWith `div` 2)
+    screenHeightHalf :: Int
+    screenHeightHalf = (screenHeight `div` 2)
     windowName :: String
     windowName = "gahuu"
     window :: Display
@@ -89,5 +89,5 @@ module Util where
 
     --Util coords
     toDrawCoords :: Float -> Coord -> Coord
-    toDrawCoords pX (x,y) = (x - screenWithHalf - (round pX), y - screenHeightHalf) 
+    toDrawCoords pX Coord {cx = x,cy = y} = Coord (x - screenWithHalf - (round pX)) (y - screenHeightHalf) 
 
