@@ -7,8 +7,14 @@ module Util where
     screenHeight = 640
     screenWith :: Int
     screenWith = 480
+    screenWithHalf :: Int
+    screenWithHalf   = (screenWith   / 2)
+    screenWithHalf :: Int
+    screenHeightHalf = (screenHeight / 2)
+    windowName :: String
+    windowName = "gahuu"
     window :: Display
-    window = InWindow "gahuu" (screenHeight,screenWith) (100,100)
+    window = InWindow windowName (screenHeight,screenWith) (100,100)
     background :: Color
     background = makeColor 255 255 255 255
     fps :: Int
@@ -38,6 +44,7 @@ module Util where
                                  , gIsPaused   :: Bool
                                  , gSeed       :: Float
                                  , gKeyPresses :: [Event]
+                                 , gXOffset    :: Int
                                  }  
 
     data Player = Player { 
@@ -79,4 +86,8 @@ module Util where
 
     posMul :: Num a => a -> (a,a) -> (a,a)
     posMul n (a,b) = (n * a,n * b)
+
+    --Util coords
+    toDrawCoords :: Float -> Coord -> Coord
+    toDrawCoords pX (x,y) = (x - screenWithHalf - (round pX), y - screenHeightHalf) 
 
