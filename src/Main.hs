@@ -6,4 +6,4 @@ import Util
 import World
 
 main :: IO ()
-main = playIO window background fps initialState view getKeyPress step
+main = playIO window cyan fps initialState view getKeyPress step
