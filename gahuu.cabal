@@ -14,7 +14,7 @@ executable gahuu
   hs-source-dirs: src
   other-modules: Player, Ai, World, LevelGen, Util, Io
   -- other-extensions:
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N -Wall -Werror
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N -Wall
   build-depends:
       base >=4.7 && <5
     , gloss >=1.13
