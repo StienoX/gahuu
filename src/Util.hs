@@ -26,13 +26,13 @@ module Util where
 
     data Coord = Coord {cx :: Int, cy :: Int}
 
-    data GameState = MkGameState { chunks :: ActChunks
-                             , player :: Player
-                             , enemies :: [AI]
-                             , isPaused :: Bool
-                             , seed :: Float
-                             , keyPresses :: [Event]
-                             }  
+    data GameState = MkGameState { gChunks     :: ActChunks
+                                 , gPlayer     :: Player
+                                 , gEnemies    :: [AI]
+                                 , gIsPaused   :: Bool
+                                 , gSeed       :: Float
+                                 , gKeyPresses :: [Event]
+                                 }  
 
     data Player = Player { 
         pos    :: FloatCoord,
@@ -53,10 +53,22 @@ module Util where
     }
 
     data Chunk = MkChunk { 
-        chunkId :: Int,
-        length :: Int,
-        startPos :: Int,
-        endPos :: Int,
-        unloadPos :: Int,
-        platforms :: [Platform]
+        chunkId        :: Int,
+        chunkLength    :: Int,
+        chunkStartPos  :: Int,
+        chunkEndPos    :: Int,
+        chunkUnloadPos :: Int,
+        chunkPlatforms :: [Platform]
     }
+
+    toCoord :: FloatCoord -> Coord
+    toCoord (x,y) = Coord {cx = round x, cy = round y}
+
+    posSub :: Num a => (a,a) -> (a,a) -> (a,a)
+    posSub (a,b) (c,d) = (a - c,b - d)
+    
+    posAdd :: Num a => (a,a) -> (a,a) -> (a,a)
+    posAdd (a,b) (c,d) = (a + c,b + d)
+
+    posMul :: Num a => a -> (a,a) -> (a,a)
+    posMul n (a,b) = (n * a,n * b)
