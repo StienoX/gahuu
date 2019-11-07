@@ -3,8 +3,7 @@ import Util
 
 
 
-platformHitbox :: Platform -> Hitbox
-platformHitbox (a,b) = MkHitbox a b
+
 
 --Returns chunk based on index
 getChunk :: Int -> ActChunks -> Chunk

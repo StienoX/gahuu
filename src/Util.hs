@@ -1,6 +1,7 @@
 module Util where
 
     import Graphics.Gloss.Interface.Pure.Game
+    import Graphics.Gloss.Data.Bitmap
 
     --Settings
     screenHeight :: Int
@@ -32,7 +33,7 @@ module Util where
 
     --Types
     type Seed = Float 
-    type Platform = (Coord, Coord)   
+    data Platform = MkPlatform (Coord, Coord) Rectangle
     type ActChunks = (Chunk,Chunk,Chunk)  
     type FloatCoord = (Float, Float)
 
@@ -45,6 +46,8 @@ module Util where
                                  , gSeed       :: Float
                                  , gKeyPresses :: [Event]
                                  , gXOffset    :: Int
+                                 , gBitMapData :: BitmapData
+                                 , gPossibleChunks :: [Chunk]
                                  }  
 
     data Player = Player { 
@@ -53,12 +56,13 @@ module Util where
         vy     :: Float,
         vprev  :: Float,
         hitbox :: Hitbox, 
-        isDead :: Bool
+        isDead :: Bool,
+        sprite :: Rectangle
     }  
 
     data AI_type = AI1 | AI2 | AI3 --Possible more types if needed
         deriving (Eq)
-    data AI = MkAI AI_type FloatCoord Hitbox
+    data AI = MkAI AI_type FloatCoord Hitbox Rectangle
 
     data Hitbox = MkHitbox { 
         start :: Coord,   --topleft corner
@@ -87,7 +91,15 @@ module Util where
     posMul :: Num a => a -> (a,a) -> (a,a)
     posMul n (a,b) = (n * a,n * b)
 
+    platformHitbox :: Platform -> Hitbox
+    platformHitbox (MkPlatform (a,b) _) = MkHitbox a b
+
     --Util coords
     toDrawCoords :: Float -> Coord -> Coord
     toDrawCoords pX Coord {cx = x,cy = y} = Coord (x - screenWithHalf - (round pX)) (y - screenHeightHalf) 
 
+    getRectangles :: Player -> [AI] -> [Platform] -> [Rectangle]
+    getRectangles player enemies platforms = [getPlayerRectangle] ++ (map getEnemyRectangle enemies) ++ (map getPlatformRectangle platforms)
+      where getPlayerRectangle                       = sprite player
+            getEnemyRectangle (MkAI _ _ _ rect)      = rect
+            getPlatformRectangle (MkPlatform _ rect) = rect
