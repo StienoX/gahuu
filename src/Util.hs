@@ -43,7 +43,7 @@ module Util where
                                  , gPlayer     :: Player
                                  , gEnemies    :: [AI]
                                  , gIsPaused   :: Bool
-                                 , gSeed       :: Float
+                                 , gSeed       :: Int
                                  , gKeyPresses :: [Event]
                                  , gXOffset    :: Int
                                  , gBitMapData :: BitmapData
@@ -60,6 +60,9 @@ module Util where
         sprite :: Rectangle
     }  
 
+    initialPlayer :: Player
+    initialPlayer = Player (15, 15) 0 0 0 dhb False defaultPlatformRect
+
     data AI_type = AI1 | AI2 | AI3 --Possible more types if needed
         deriving (Eq)
     data AI = MkAI AI_type FloatCoord Hitbox Rectangle
@@ -68,6 +71,9 @@ module Util where
         start :: Coord,   --topleft corner
         end   :: Coord    --bottomright corner
     }
+    
+    dhb :: Hitbox
+    dhb = MkHitbox (Coord 15 15) (Coord 15 14)
 
     data Chunk = MkChunk { 
         chunkId        :: Int,
@@ -77,6 +83,14 @@ module Util where
         chunkUnloadPos :: Int,
         chunkPlatforms :: [Platform]
     }
+    
+    startingChunks :: ActChunks
+    startingChunks = (MkChunk 0 15 0  15 30 [MkPlatform (Coord 0 18, Coord 15 20) defaultPlatformRect]
+                     ,MkChunk 1 15 15 30 45 [MkPlatform (Coord 0 18, Coord 15 20) defaultPlatformRect, MkPlatform (Coord 5 12, Coord 10 12) defaultPlatformRect]
+                     ,MkChunk 2 15 30 45 60 [MkPlatform (Coord 0 18, Coord 15 20) defaultPlatformRect])
+    
+    defaultPlatformRect :: Rectangle
+    defaultPlatformRect = Rectangle (0,0) (32,32)
     
     --Util functions
     toCoord :: FloatCoord -> Coord

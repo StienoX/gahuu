@@ -20,7 +20,7 @@ view g = loadBMP "C:\\Users\\JellePrincipaal\\Documents\\Github\\gahuu\\src\\img
 
 --Pure view function
 viewPure :: GameState -> Picture
-viewPure gstate = polygon [(gSeed gstate, 0), (0.5, 0.5), (0,0.5), (0, 0) ]
+viewPure gstate = undefined
 
 --Loads save
 loadSave :: String -> IO GameState
