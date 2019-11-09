@@ -2,6 +2,7 @@ module Util where
 
     import Graphics.Gloss.Interface.Pure.Game
     import Graphics.Gloss.Data.Bitmap
+    import Numeric.Extra
 
     --Settings
     screenHeight :: Int
@@ -112,8 +113,11 @@ module Util where
     toDrawCoords :: Float -> Coord -> Coord
     toDrawCoords pX Coord {cx = x,cy = y} = Coord (x - screenWithHalf - (round pX)) (y - screenHeightHalf) 
 
-    getRectangles :: Player -> [AI] -> [Platform] -> [Rectangle]
-    getRectangles player enemies platforms = [getPlayerRectangle] ++ (map getEnemyRectangle enemies) ++ (map getPlatformRectangle platforms)
-      where getPlayerRectangle                       = sprite player
-            getEnemyRectangle (MkAI _ _ _ rect)      = rect
-            getPlatformRectangle (MkPlatform _ rect) = rect
+    getRectangles :: Player -> [AI] -> [Platform] -> [(Float,Float,Rectangle)]
+    getRectangles player enemies platforms = [getTupleElement getPlayerPos getPlayerRectangle] ++ (map getEnemyTuple enemies) ++ (map getPlatformTuple platforms)
+      where getPlayerRectangle                        = sprite player
+            getEnemyTuple (MkAI _ flc _ rect)         = getTupleElement flc rect
+            getPlatformTuple (MkPlatform (c,_) rect) = (intToFloat (cx c), intToFloat (cy c),rect)
+            getPlayerPos                              = pos player
+            getTupleElement (a,b) rect                = (a,b,rect)
+
