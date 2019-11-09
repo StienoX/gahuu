@@ -29,7 +29,7 @@ step dT gs = do
   return gs_afterInteractions
 
 parseInput :: Float -> GameState -> IO GameState
-parseInput dT gs = pure gs { gPlayer = foldl updP gPlayer, gKeyPresses = []} 
+parseInput dT gs = pure gs { gPlayer = foldl updP (gPlayer gs) (gKeyPresses gs), gKeyPresses = []} 
   where 
     lphb (a, b, c) = map (platformHitbox) (chunkPlatforms a) ++ map (platformHitbox) (chunkPlatforms b) ++ map (platformHitbox) (chunkPlatforms c)
     phb = lphb (gChunks gs) -- Platform hitboxes
