@@ -45,5 +45,5 @@ playerHitEnemy player enemies | playerCollided player enemies = player {isDead =
 
 --Updates the player
 -- Player - Hitboxes - Enemies - Keypresses - deltaT -> Player
-updatePlayer :: Player -> [Hitbox] -> [Hitbox] -> Event -> Float -> Player
-updatePlayer player hitboxes enemies eventkey deltaT = playerGravity (playerCollision (playerHitEnemy (playerMove eventkey player deltaT) enemies) hitboxes) deltaT hitboxes
+updatePlayer :: [Hitbox] -> [Hitbox] -> Float -> Player -> Event -> Player
+updatePlayer  hitboxes enemies deltaT player eventkey  = playerGravity (playerCollision (playerHitEnemy (playerMove eventkey player deltaT) enemies) hitboxes) deltaT hitboxes
