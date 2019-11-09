@@ -16,7 +16,7 @@ getKeyPress e gs = return (gs {gKeyPresses = gKeyPresses gs ++ [e]})
 
 --Impure view function
 view :: GameState -> IO Picture
-view g = loadBMP "C:\\Users\\JellePrincipaal\\Documents\\Github\\gahuu\\src\\img\\Dirt.bmp"  -- return (viewPure g)
+view g = loadFile loadBMP "/src/img/Dirt.bmp"  -- return (viewPure g)
 
 --Pure view function
 viewPure :: GameState -> Picture
