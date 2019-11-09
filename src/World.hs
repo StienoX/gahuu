@@ -21,7 +21,25 @@ running :: GameState -> Picture
 running = undefined
 
 step :: Float -> GameState -> IO GameState
-step dT gs = pure gs
+step dT gs = do 
+  gs_afterPlayer   <- parseInput dT gs
+  gs_afterAI      <- stepAI dT gs_afterPlayer
+  gs_afterPhysics <- simPhysics dT gs_afterAI
+  gs_afterInteractions <- interactions gs_afterPhysics
+  return gs_afterInteractions
+
+parseInput :: Float -> GameState -> IO GameState
+parseInput dT gs = pure gs --do 
+--  getres <- playerMove 
+
+stepAI :: Float -> GameState -> IO GameState
+stepAI dT gs = pure gs
+
+simPhysics :: Float -> GameState -> IO GameState
+simPhysics dT gs = pure gs
+
+interactions :: GameState -> IO GameState
+interactions gs = pure gs
 
 pauseMenu = undefined
 --pauseMenu buttons = Pictures [(Picture pauseBackgroundColor),pauseButtons buttons]

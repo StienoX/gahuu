@@ -106,8 +106,17 @@ module Util where
     posMul :: Num a => a -> (a,a) -> (a,a)
     posMul n (a,b) = (n * a,n * b)
 
+    gridToPixels :: Coord -> Coord
+    gridToPixels (Coord a b) = Coord (a * 32) (b * 32)
+
+    bottomRight :: Coord -> Coord
+    bottomRight (Coord a b) = Coord (a + 32) (b + 32)
+
     platformHitbox :: Platform -> Hitbox
-    platformHitbox (MkPlatform (a,b) _) = MkHitbox a b
+    platformHitbox (MkPlatform (a,b) _) = MkHitbox pa pbrb
+        where
+            pa = gridToPixels a
+            pbrb = bottomRight (gridToPixels b)
 
     --Util coords
     toDrawCoords :: Float -> Coord -> Coord
