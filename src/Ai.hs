@@ -17,7 +17,7 @@ processAI (MkAI AI3 aiPos hitbox rect) speed player  | posSub aiPos (pos player)
 
 --Processes all ai behavior
 updateAI :: [AI] -> Float -> Float -> Player -> [AI]
-updateAI xs speed player = map f xs
+updateAI xs speed gravStrength player = map f xs
   where f x = processAI x speed player
 
 --Linair gravity ai
