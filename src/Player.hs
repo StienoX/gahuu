@@ -8,23 +8,6 @@ import Graphics.Gloss.Interface.IO.Game
 makeHitboxFloat :: FloatCoord -> FloatCoord -> Hitbox
 makeHitboxFloat (x,y) (x2,y2) = MkHitbox Coord {cx = round x, cy = round y} Coord {cx = round x2, cy = round y2}
 
-collision :: Hitbox -> Hitbox -> Bool
-collision h1 h2 | h2x2 < h1x1 = False
-                | h2y2 < h1y1 = False
-                | h2x1 > h1x2 = False
-                | h2y1 > h1y2 = False 
-                | otherwise   = True
-  where 
-    h1x1 = h' cx start h1
-    h1y1 = h' cy start h1
-    h1x2 = h' cx end   h1
-    h1y2 = h' cy end   h1
-    h2x1 = h' cx start h2
-    h2y1 = h' cy start h2
-    h2x2 = h' cx end   h2
-    h2y2 = h' cy end   h2
-    h' cf nf h = cf (nf h)
-
 --Checks player has collided with any of the hitboxes
 playerCollision :: Player -> [Hitbox] -> Player
 playerCollision player hitboxes | playerCollided player hitboxes = getUpdatePosPlayer --move player back based on vy/vgrav,vx
@@ -39,7 +22,7 @@ playerCollision player hitboxes | playerCollided player hitboxes = getUpdatePosP
 
 --Updates the player position based on the keypresses provided
 playerMove :: Event -> Player -> Float -> Player
-playerMove (EventKey (Char 'w') Down _ _) player _       | vy player == 0 = player {vprev = 0, vy = (vy player) + jump}
+playerMove (EventKey (Char 'w') Down _ _) player _       | vy player == 0 = player {vprev = (vy player) + jump, vy = (vy player) + jump}
                                                          | otherwise      = player
 playerMove (EventKey (Char 'a') Down _ _)  player deltaT = player {pos = (posSub (pos player) ((deltaT*speedPlayer),0)),vx = (deltaT*speedPlayer)}
 playerMove (EventKey (Char 'd') Down _ _)  player deltaT = player {pos = (posAdd (pos player) ((deltaT*speedPlayer),0)),vx = (-deltaT*speedPlayer)}
@@ -51,9 +34,9 @@ playerCollided player hitboxes = elem True (map (collision (hitbox player)) hitb
 
 --Updates player based on gravity
 playerGravity :: Player -> Float -> [Hitbox] -> Player
-playerGravity player deltaT hitboxes | playerCollided updatedPlayer hitboxes = player
+playerGravity player deltaT hitboxes | playerCollided updatedPlayer hitboxes = player {vprev = 0}
                                      | otherwise                             = updatedPlayer
-  where updatedPlayer = player {pos = posSub (pos player) (0,deltaT*gravStrength)}
+  where updatedPlayer = player {pos = posSub (pos player) (0,(deltaT*gravStrength-(vprev player))), vprev = (vprev player - deltaT*gravStrength)}
 
 --Checks if player is by an enemy
 playerHitEnemy :: Player -> [Hitbox] -> Player

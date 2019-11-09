@@ -1,10 +1,6 @@
 module LevelGen where
 import Util
 
-
-
-
-
 --Returns chunk based on index
 getChunk :: Int -> ActChunks -> Chunk
 getChunk 0 (x,_,_) = x

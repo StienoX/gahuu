@@ -117,7 +117,23 @@ module Util where
     getRectangles player enemies platforms = [getTupleElement getPlayerPos getPlayerRectangle] ++ (map getEnemyTuple enemies) ++ (map getPlatformTuple platforms)
       where getPlayerRectangle                        = sprite player
             getEnemyTuple (MkAI _ flc _ rect)         = getTupleElement flc rect
-            getPlatformTuple (MkPlatform (c,_) rect) = (intToFloat (cx c), intToFloat (cy c),rect)
+            getPlatformTuple (MkPlatform (c,_) rect)  = (intToFloat (cx c), intToFloat (cy c),rect)
             getPlayerPos                              = pos player
             getTupleElement (a,b) rect                = (a,b,rect)
 
+    collision :: Hitbox -> Hitbox -> Bool
+    collision h1 h2 | h2x2 < h1x1 = False
+                    | h2y2 < h1y1 = False
+                    | h2x1 > h1x2 = False
+                    | h2y1 > h1y2 = False 
+                    | otherwise   = True
+        where 
+        h1x1 = h' cx start h1
+        h1y1 = h' cy start h1
+        h1x2 = h' cx end   h1
+        h1y2 = h' cy end   h1
+        h2x1 = h' cx start h2
+        h2y1 = h' cy start h2
+        h2x2 = h' cx end   h2
+        h2y2 = h' cy end   h2
+        h' cf nf h = cf (nf h)
