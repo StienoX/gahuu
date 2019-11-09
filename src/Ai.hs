@@ -22,10 +22,10 @@ updateAI xs speed player = map f xs
 
 --Linair gravity ai
 gravityAI :: AI -> Float -> [Hitbox] -> AI
-gravityAI = (MkAI AI2 aiPos aiHitbox aiRect) _ _ = MkAI AI2 aiPos aiHitbox aiRect 
-gravityAI = (MkAI aiType aiPos aiHitbox aiRect) gravFactor hitboxes | aiCollided updatedAI hitboxes = (MkAI aiType aiPos aiHitbox aiRect)
-                                                                    | otherwise                     = updatedAI
-  where updatedAI = MkAI aiType (posSub (aiPos (0,gravFactor)))
+gravityAI ai@(MkAI AI2 _ _ _) _ _ = ai
+gravityAI (MkAI aiType aiPos aiHitbox aiRect) gravFactor hitboxes | aiCollided updatedAI hitboxes = (MkAI aiType aiPos aiHitbox aiRect)
+                                                                  | otherwise                     = updatedAI
+  where updatedAI = MkAI aiType (posSub aiPos (0,gravFactor)) aiHitbox aiRect
 
 --Checks if ai has collided with a hitbox
 aiCollided :: AI -> [Hitbox] -> Bool

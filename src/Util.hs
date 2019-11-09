@@ -40,6 +40,10 @@ module Util where
 
     data Coord = Coord {cx :: Int, cy :: Int}
 
+    instance Num Coord where
+      (-) a b = Coord {cx = (cx a - cx b), cy = (cy a - cy b)}
+      (+) a b = Coord {cx = (cx a + cx b), cy = (cy a + cy b)}
+
     data GameState = MkGameState { gChunks     :: ActChunks
                                  , gPlayer     :: Player
                                  , gEnemies    :: [AI]
@@ -146,3 +150,7 @@ module Util where
         h2x2 = h' cx end   h2
         h2y2 = h' cy end   h2
         h' cf nf h = cf (nf h)
+
+    updateHitbox :: FloatCoord -> Hitbox -> Hitbox
+    updateHitbox fc h = MkHitbox {start = (start h + df), end = (end h + df)}
+      where df = (toCoord fc) - (start h)
