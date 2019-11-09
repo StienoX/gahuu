@@ -17,15 +17,15 @@ processAI (MkAI AI3 aiPos hitbox rect) speed player  | posSub aiPos (pos player)
 
 --Processes all ai behavior
 updateAI :: [AI] -> Float -> Float -> Player -> [AI]
-updateAI xs speed gravStrength player = map f xs
-  where f x = processAI x speed player
+updateAI xs speed deltaT player = map f xs
+  where f x = processAI x (speed*deltaT) player
 
 --Linair gravity ai
 gravityAI :: AI -> Float -> [Hitbox] -> AI
 gravityAI ai@(MkAI AI2 _ _ _) _ _ = ai
-gravityAI (MkAI aiType aiPos aiHitbox aiRect) gravFactor hitboxes | aiCollided updatedAI hitboxes = (MkAI aiType aiPos aiHitbox aiRect)
+gravityAI (MkAI aiType aiPos aiHitbox aiRect) deltaT hitboxes | aiCollided updatedAI hitboxes = (MkAI aiType aiPos aiHitbox aiRect)
                                                                   | otherwise                     = updatedAI
-  where updatedAI = MkAI aiType (posSub aiPos (0,gravFactor)) aiHitbox aiRect
+  where updatedAI = MkAI aiType (posSub aiPos (0,deltaT*gravStrength)) aiHitbox aiRect
 
 --Checks if ai has collided with a hitbox
 aiCollided :: AI -> [Hitbox] -> Bool
