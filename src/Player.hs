@@ -24,8 +24,8 @@ playerCollision player hitboxes | playerCollided player hitboxes = getUpdatePosP
 playerMove :: Event -> Player -> Float -> Player
 playerMove (EventKey (Char 'w') Down _ _) player _       | vy player == 0 = playerUpdateHitbox (player {vy = ((vy player) + jump)})
                                                          | otherwise      = player
-playerMove (EventKey (Char 'a') Down _ _)  player deltaT = playerUpdateHitbox (player {pos = (posSub (pos player) ((deltaT*speedPlayer),0)),vx = (deltaT*speedPlayer)})
-playerMove (EventKey (Char 'd') Down _ _)  player deltaT = playerUpdateHitbox (player {pos = (posAdd (pos player) ((deltaT*speedPlayer),0)),vx = (-deltaT*speedPlayer)})
+playerMove (EventKey (Char 'a') Down _ _)  player deltaT = playerUpdateHitbox (player {pos = (posSub (pos player) ((deltaT*speedPlayer),0)),vx = (-deltaT*speedPlayer)})
+playerMove (EventKey (Char 'd') Down _ _)  player deltaT = playerUpdateHitbox (player {pos = (posAdd (pos player) ((deltaT*speedPlayer),0)),vx = (deltaT*speedPlayer)})
 playerMove  _  player _                                  = player
 
 --Checks if player has collided with a hitbox
