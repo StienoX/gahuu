@@ -27,15 +27,13 @@ module Util where
     pauseBackgroundColor :: Color
     pauseBackgroundColor = greyN 0.4
     speedPlayer :: Float
-    speedPlayer = 1.0
+    speedPlayer = 330.0
     jump :: Float
     jump = 1.0
     gravStrength :: Float
     gravStrength = 1.0
     initialPlayer :: Player
-    initialPlayer = Player (0, 0) 0 0 0 dhb False defaultPlatformRect
-    dhb :: Hitbox
-    dhb = MkHitbox (Coord 0 0) (Coord 32 32)
+    initialPlayer = Player (0, 641) 0 660 0 (MkHitbox (Coord 0 641) (Coord 32 671)) False defaultPlatformRect
 
     --Types
     type Seed = Float 
@@ -119,12 +117,13 @@ module Util where
     bottomRight :: Coord -> Coord
     bottomRight (Coord a b) = Coord (a + 32) (b + 32)
 
-    platformHitbox :: Platform -> Hitbox
+    platformHitbox (MkPlatform (a,b) _) = MkHitbox a b
+    {--platformHitbox :: Platform -> Hitbox
     platformHitbox (MkPlatform (a,b) _) = MkHitbox pa pbrb
         where
             pa = gridToPixels a
             pbrb = bottomRight (gridToPixels b)
-
+--}
     flipTuple :: (a,b) -> (b,a)
     flipTuple (a,b) = (b,a)
 
