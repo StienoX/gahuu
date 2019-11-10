@@ -22,4 +22,5 @@ executable gahuu
     , containers
     , directory
     , extra
+    , bmp
   default-language: Haskell2010
