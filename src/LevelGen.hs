@@ -14,6 +14,9 @@ genNextChunk :: ActChunks -> Seed -> ActChunks
 genNextChunk (_,x,prevChunk) seed = (x,prevChunk,genPlatforms newChunk seed)
   where newChunk = undefined
 
+rollDice :: Int -> IO Int
+rollDice max = getStdRandom (randomR (1,max))
+
 --Generates new platforms for a new chunk
 genPlatforms :: Chunk -> Seed -> Chunk
 --genPlatforms (MkChunk chkId len rootPos endPos _ []) seed = undefined

@@ -29,7 +29,8 @@ step dT gs | gLoaded gs == False = initGame gs
   gs_afterAI      <- stepAI dT gs_afterPlayer
   gs_afterPhysics <- simPhysics dT gs_afterAI
   gs_afterInteractions <- interactions gs_afterPhysics
-  return gs_afterInteractions
+  random <- rollDice (length (gPossibleChunks gs_afterInteractions))
+  return gs_afterInteractions { gRandom = random}
 
 initGame :: GameState -> IO GameState
 initGame gs = do 
