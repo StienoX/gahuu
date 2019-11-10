@@ -30,6 +30,27 @@ loadSave path = undefined path
 getTime :: IO Int
 getTime = undefined
 
+getChunks :: IO [Chunk]
+getChunks = do 
+    files <- listDirectory "/src/chunks"
+    let loader id [] = []
+    let loader id (x:xs) = [loadChunk x id] ++ loader (id+1) xs
+    pure (chunks)
+
+
+
+
+loadChunk :: String -> Int -> IO Chunk
+loadChunk path id = do
+    filec <- loadFile readFile path
+    let l = length (head (lines filec))
+    --let chunkhelper :: String -> Int -> Int -> [Platform] -> [Platform]
+    let chunkhelper [] _ _ platforms = platforms
+    let chunkhelper (x:xs) cx cy platforms | x == '#'  = chunkhelper xs (cx + 1) cy [MkPlatform (Coord cx cy, Coord cx cy) defaultPlatformRect] ++ platforms
+                                           | x == '\n' = chunkhelper xs 0 (cy + 1) platforms
+                                           | otherwise = chunkhelper xs (cx + 1) cy platforms
+    pure (MkChunk id l (l + 20) (chunkhelper filec 1 1 []))
+
 --Load file relative to executable
 loadFile :: (String -> IO a) -> String -> IO a
 loadFile f path = do

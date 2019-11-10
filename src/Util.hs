@@ -85,16 +85,14 @@ module Util where
     data Chunk = MkChunk { 
         chunkId        :: Int,
         chunkLength    :: Int,
-        chunkStartPos  :: Int,
-        chunkEndPos    :: Int,
         chunkUnloadPos :: Int,
         chunkPlatforms :: [Platform]
     }
     
     startingChunks :: ActChunks
-    startingChunks = (MkChunk 0 15 0  15 30 [MkPlatform (Coord 0 18, Coord 15 20) defaultPlatformRect]
-                     ,MkChunk 1 15 15 30 45 [MkPlatform (Coord 0 18, Coord 15 20) defaultPlatformRect, MkPlatform (Coord 5 12, Coord 10 12) defaultPlatformRect]
-                     ,MkChunk 2 15 30 45 60 [MkPlatform (Coord 0 18, Coord 15 20) defaultPlatformRect])
+    startingChunks = (MkChunk 0 15 30 [MkPlatform (Coord 0 18, Coord 15 20) defaultPlatformRect]
+                     ,MkChunk 1 15 45 [MkPlatform (Coord 0 18, Coord 15 20) defaultPlatformRect, MkPlatform (Coord 5 12, Coord 10 12) defaultPlatformRect]
+                     ,MkChunk 2 15 60 [MkPlatform (Coord 0 18, Coord 15 20) defaultPlatformRect])
     
     defaultPlatformRect :: Rectangle
     defaultPlatformRect = Rectangle (0,0) (32,32)

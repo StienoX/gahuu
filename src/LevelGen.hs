@@ -1,5 +1,6 @@
 module LevelGen where
 import Util
+import System.Random
 
 --Returns chunk based on index
 getChunk :: Int -> ActChunks -> Chunk
