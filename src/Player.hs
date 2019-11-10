@@ -16,16 +16,16 @@ playerCollision player hitboxes | playerCollided player hitboxes = getUpdatePosP
                            | playerCollided playervy  hitboxes == False = playervy
                            | playerCollided playervxy hitboxes == False = playervxy
                            | otherwise = error "Unabled to reposition player outside of hitbox, vx or vy not valid"
-        playervx           = player { pos = (posSub (pos player) ((vx player),0)), vx = 0}
-        playervy           = player { pos = (posSub (pos player) (0,(vy player))), vy = 0}
-        playervxy          = player { pos = (posSub (pos player) ((vx player),(vy player))), vx = 0, vy = 0}
+        playervx           = playerUpdateHitbox (player { pos = (posSub (pos player) ((vx player),0)), vx = 0})
+        playervy           = playerUpdateHitbox (player { pos = (posSub (pos player) (0,(vy player))), vy = 0})
+        playervxy          = playerUpdateHitbox (player { pos = (posSub (pos player) ((vx player),(vy player))), vx = 0, vy = 0})
 
 --Updates the player position based on the keypresses provided
 playerMove :: Event -> Player -> Float -> Player
-playerMove (EventKey (Char 'w') Down _ _) player _       | vy player == 0 = player {vprev = (vy player) + jump, vy = (vy player) + jump}
+playerMove (EventKey (Char 'w') Down _ _) player _       | vy player == 0 = playerUpdateHitbox (player {vprev = (vy player) + jump, vy = (vy player) + jump})
                                                          | otherwise      = player
-playerMove (EventKey (Char 'a') Down _ _)  player deltaT = player {pos = (posSub (pos player) ((deltaT*speedPlayer),0)),vx = (deltaT*speedPlayer)}
-playerMove (EventKey (Char 'd') Down _ _)  player deltaT = player {pos = (posAdd (pos player) ((deltaT*speedPlayer),0)),vx = (-deltaT*speedPlayer)}
+playerMove (EventKey (Char 'a') Down _ _)  player deltaT = playerUpdateHitbox (player {pos = (posSub (pos player) ((deltaT*speedPlayer),0)),vx = (deltaT*speedPlayer)})
+playerMove (EventKey (Char 'd') Down _ _)  player deltaT = playerUpdateHitbox (player {pos = (posAdd (pos player) ((deltaT*speedPlayer),0)),vx = (-deltaT*speedPlayer)})
 playerMove  _  player _                                  = player
 
 --Checks if player has collided with a hitbox
@@ -42,11 +42,11 @@ playerGravity player deltaT hitboxes | playerCollided updatedPlayer hitboxes = p
 playerHitEnemy :: Player -> [Hitbox] -> Player
 playerHitEnemy player enemies | playerCollided player enemies = player {isDead = True}
                               | otherwise                     = player
-
+--Updates players hitbox based of its own position
 playerUpdateHitbox :: Player -> Player
 playerUpdateHitbox player = player {hitbox = (updateHitbox (pos player)(hitbox player))}
 
 --Updates the player
 -- Player - Hitboxes - Enemies - Keypresses - deltaT -> Player
 updatePlayer :: [Hitbox] -> [Hitbox] -> Float -> Player -> Event -> Player
-updatePlayer  hitboxes enemies deltaT player eventkey  = playerGravity (playerCollision (playerHitEnemy (playerMove eventkey player deltaT) enemies) hitboxes) deltaT hitboxes
+updatePlayer  hitboxes enemies deltaT player eventkey  = playerUpdateHitbox (playerGravity (playerCollision (playerHitEnemy (playerMove eventkey player deltaT) enemies) hitboxes) deltaT hitboxes)

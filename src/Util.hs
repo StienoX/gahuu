@@ -126,13 +126,19 @@ module Util where
     toDrawCoords :: Float -> Coord -> Coord
     toDrawCoords pX Coord {cx = x,cy = y} = Coord (x - screenWithHalf - (round pX)) (y - screenHeightHalf) 
 
-    getRectangles :: Player -> [AI] -> [Platform] -> [(Float,Float,Rectangle)]
-    getRectangles player enemies platforms = [getTupleElement getPlayerPos getPlayerRectangle] ++ (map getEnemyTuple enemies) ++ (map getPlatformTuple platforms)
+    getPrePicture :: Player -> [AI] -> [Platform] -> [(Float,Float,Rectangle)]
+    getPrePicture player enemies platforms = [getTupleElement getPlayerPos getPlayerRectangle] ++ (map getEnemyTuple enemies) ++ (map getPlatformTuple platforms)
       where getPlayerRectangle                        = sprite player
             getEnemyTuple (MkAI _ flc _ rect)         = getTupleElement flc rect
             getPlatformTuple (MkPlatform (c,_) rect)  = (intToFloat (cx c), intToFloat (cy c),rect)
             getPlayerPos                              = pos player
             getTupleElement (a,b) rect                = (a,b,rect)
+
+    toPicture :: (Float,Float,Rectangle) -> BitmapData -> Picture
+    toPicture (x,y,rect) bmd = undefined
+    
+    getFrame :: Player -> [AI] -> [Platform] -> BitmapData -> Picture
+    getFrame pl enemies platforms bmp = Pictures (map ((flip toPicture) bmp) (getPrePicture pl enemies platforms))
 
     collision :: Hitbox -> Hitbox -> Bool
     collision h1 h2 | h2x2 < h1x1 = False
