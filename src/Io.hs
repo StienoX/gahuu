@@ -17,6 +17,7 @@ getKeyPress e gs = return (gs {gKeyPresses = gKeyPresses gs ++ [e]})
 --Impure view function
 view :: GameState -> IO Picture
 view g | gLoaded g == False = return (rectangleSolid 25.00 25.00)
+       | gIsPaused g        = return (renderMenu g)
        | otherwise          = return (viewPure g)
 
 --Pure view function

@@ -10,11 +10,6 @@ import LevelGen
 import Util
 
 
---Render game
-renderGame :: GameState -> Picture
-renderGame gs = case gIsPaused gs of
-    True  -> pauseMenu ["Continue","Exit"]
-    False -> running gs
 
 running :: GameState -> Picture
 running = undefined
@@ -58,12 +53,4 @@ interactions :: GameState -> IO GameState
 interactions gs | elem 'p' (keyDown (gEventData gs)) = pure (gs {gIsPaused = True})
                 | otherwise = pure gs {gChunks = updateChunks gs (gXOffset gs) (gChunks gs) (gRandom gs), gIsPaused = False}
 
-pauseMenu = undefined
---pauseMenu buttons = Pictures [(Picture pauseBackgroundColor),pauseButtons buttons]
---pauseButtons :: [String] -> Picture
-{-pauseButtons = Pictures map mkButton
-  where mkButton :: String -> Int -> [Picture] -> [Picture]
-        mkButton str y pics = map (Transpose 0 (-(y/2)*numButtons)) buttons 
-          where buttons = map (Translate 0 y) (pics:(Text str))
-                numButtons = length buttons
-                    -}
+pauseMenu gs = return (processEvents gs)

@@ -207,3 +207,11 @@ module Util where
 
     initEventData :: EventData
     initEventData = EventData [] []
+
+    --Render game
+    renderMenu :: GameState -> Picture
+    renderMenu gs = Scale 0.5 0.5 (Translate (-520) (-300) (Pictures (renderText ["Press C to Continue","Press E to Exit"] [])))
+    renderText :: [String] -> [Picture] -> [Picture]
+    renderText [] pics = pics
+    renderText (str:strs) pics = renderText strs (map (Translate 0 200) (pics ++ [Text str]))
+
