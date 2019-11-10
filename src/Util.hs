@@ -122,6 +122,9 @@ module Util where
             pa = gridToPixels a
             pbrb = bottomRight (gridToPixels b)
 
+    flipTuple :: (a,b) -> (b,a)
+    flipTuple (a,b) = (b,a)
+
     --Util coords
     toDrawCoords :: Float -> Coord -> Coord
     toDrawCoords pX Coord {cx = x,cy = y} = Coord (x - screenWithHalf - (round pX)) (y - screenHeightHalf) 

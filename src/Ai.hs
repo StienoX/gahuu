@@ -2,22 +2,25 @@
 
 module Ai where
 import Util
-
+import Data.Maybe
+import Numeric.Extra
 
 
 --Processes the behavior for the provided ai
-processAI :: AI -> Float -> Player -> AI
-processAI (MkAI AI1 aiPos hitbox rect) speed player  | posSub aiPos (pos player) < (0,0) = MkAI AI1 (posSub aiPos (speed,0)) hitbox rect
-                                                     | otherwise                         = MkAI AI1 (posAdd aiPos (speed,0)) hitbox rect
+processAI :: AI -> Float -> Player -> Maybe AI
+processAI (MkAI AI1 aiPos hitbox rect) speed player  | (flipTuple aiPos) > (intToFloat screenHeight,0) = Nothing
+                                                     | posSub aiPos (pos player) < (0,0)               = Just (updateHitboxAI (MkAI AI1 (posSub aiPos (speed,0)) hitbox rect))
+                                                     | otherwise                                       = Just (updateHitboxAI (MkAI AI1 (posAdd aiPos (speed,0)) hitbox rect))
 
-processAI (MkAI AI2 aiPos hitbox rect) speed player                                      = MkAI AI2 (posMul speed (posAdd (posSub (pos player) aiPos) aiPos)) hitbox rect
+processAI (MkAI AI2 aiPos hitbox rect) speed player                                                    = Just (updateHitboxAI (MkAI AI2 (posMul speed (posAdd (posSub (pos player) aiPos) aiPos)) hitbox rect))
 
-processAI (MkAI AI3 aiPos hitbox rect) speed player  | posSub aiPos (pos player) < (0,0) = MkAI AI1 (posAdd aiPos (speed,0)) hitbox rect
-                                                     | otherwise                         = MkAI AI1 (posSub aiPos (speed,0)) hitbox rect
+processAI (MkAI AI3 aiPos hitbox rect) speed player  | (flipTuple aiPos) > (intToFloat screenHeight,0) = Nothing
+                                                     | posSub aiPos (pos player) < (0,0)               = Just (updateHitboxAI (MkAI AI1 (posAdd aiPos (speed,0)) hitbox rect))
+                                                     | otherwise                                       = Just (updateHitboxAI (MkAI AI1 (posSub aiPos (speed,0)) hitbox rect))
 
 --Processes all ai behavior
 updateAI :: [AI] -> Float -> Float -> Player -> [AI]
-updateAI xs speed deltaT player = map f xs
+updateAI xs speed deltaT player = mapMaybe f xs
   where f x = processAI x (speed*deltaT) player
 
 --Linair gravity ai
@@ -30,3 +33,6 @@ gravityAI (MkAI aiType aiPos aiHitbox aiRect) deltaT hitboxes | aiCollided updat
 --Checks if ai has collided with a hitbox
 aiCollided :: AI -> [Hitbox] -> Bool
 aiCollided (MkAI _ _ hitbox _) hitboxes = elem True (map (collision hitbox) hitboxes)
+
+updateHitboxAI :: AI -> AI
+updateHitboxAI (MkAI aiType aiPos hitbox rect) = MkAI aiType aiPos (updateHitbox aiPos hitbox) rect
