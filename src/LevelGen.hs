@@ -12,12 +12,12 @@ getChunk _ _ = error "Out of range"
 --Generates new chunk based of the previous chunk and the seed
 genNextChunk :: GameState -> ActChunks -> Int -> ActChunks
 genNextChunk gs (_,x,prevChunk) seed = (x,prevChunk,newChunk)
-  where newChunk = selectedChunk {chunkStart = newstart, chunkUnloadPos = newstart + (chunkLength selectedChunk), chunkPlatforms = map (flip (addChunkStart) (newstart)) (chunkPlatforms selectedChunk) }
+  where newChunk = selectedChunk {chunkStart = newstart, chunkUnloadPos = newstart + (chunkLength selectedChunk) + 10 * 32, chunkPlatforms = map (flip (addChunkStart) (newstart)) (chunkPlatforms selectedChunk) }
         selectedChunk = (gPossibleChunks gs) !! (gRandom gs)
         newstart = (chunkStart prevChunk) + (chunkLength prevChunk)
 
 rollDice :: Int -> IO Int
-rollDice max = getStdRandom (randomR (1,max))
+rollDice max = getStdRandom (randomR (1,max - 1))
 
 --Checks if new chunks need to be generated and unload old chunks
 updateChunks :: GameState -> Float -> ActChunks -> Int -> ActChunks
