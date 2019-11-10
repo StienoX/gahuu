@@ -133,19 +133,19 @@ module Util where
     toDrawCoords :: Float -> FloatCoord -> FloatCoord
     toDrawCoords pX (x,y) = ((x - (intToFloat screenWithHalf) - pX), (y - (intToFloat screenHeightHalf) ))
 
-    getPrePicture :: Player -> [AI] -> [Platform] -> [(Float,Float,Rectangle)]
-    getPrePicture player enemies platforms = [getTupleElement getPlayerPos getPlayerRectangle] ++ (map getEnemyTuple enemies) ++ (map getPlatformTuple platforms)
+    getPrePicture :: Player -> [AI] -> [Platform] -> Float -> [(Float,Float,Rectangle)]
+    getPrePicture player enemies platforms pX = [getTupleElement getPlayerPos getPlayerRectangle] ++ (map getEnemyTuple enemies) ++ (map getPlatformTuple platforms)
       where getPlayerRectangle                        = sprite player
-            getEnemyTuple (MkAI _ flc _ rect)         = getTupleElement flc rect
-            getPlatformTuple (MkPlatform (c,_) rect)  = (intToFloat (cx c), intToFloat (cy c),rect)
-            getPlayerPos                              = pos player
+            getEnemyTuple (MkAI _ flc _ rect)         = getTupleElement (toDrawCoords pX flc) rect
+            getPlatformTuple (MkPlatform (c,_) rect)  = getTupleElement (toDrawCoords pX ((intToFloat (cx c)),(intToFloat (cy c)))) rect
+            getPlayerPos                              = toDrawCoords pX (pos player)
             getTupleElement (a,b) rect                = (a,b,rect)
 
     toPicture :: (Float,Float,Rectangle) -> BitmapData -> Picture
     toPicture (x,y,rect) bmd = Translate x y (BitmapSection rect bmd)
     
-    getFrame :: Player -> [AI] -> [Platform] -> BitmapData -> Picture
-    getFrame pl enemies platforms bmp = Pictures (map ((flip toPicture) bmp) (getPrePicture pl enemies platforms))
+    getFrame :: Player -> [AI] -> [Platform] -> BitmapData -> Float -> Picture
+    getFrame pl enemies platforms bmp pX = Pictures (map ((flip toPicture) bmp) (getPrePicture pl enemies platforms pX))
 
     collision :: Hitbox -> Hitbox -> Bool
     collision h1 h2 | h2x2 < h1x1 = False
