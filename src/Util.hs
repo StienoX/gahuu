@@ -10,10 +10,10 @@ module Util where
     screenHeight = 640
     screenWith :: Int
     screenWith = 480
-    screenWithHalf :: Int
-    screenWithHalf   = (screenWith `div` 2)
-    screenHeightHalf :: Int
-    screenHeightHalf = (screenHeight `div` 2)
+    screenWithHalf :: Float
+    screenWithHalf   = (-1*intToFloat (screenWith `div` 2) + 96)
+    screenHeightHalf :: Float
+    screenHeightHalf = (-1*intToFloat (screenHeight `div` 2 - 96))
     windowName :: String
     windowName = "gahuu"
     window :: Display
@@ -90,7 +90,7 @@ module Util where
     
     startingChunks :: ActChunks
     startingChunks = (MkChunk 0 15 30 [MkPlatform (Coord 0 0, Coord 480 32) defaultPlatformRect]
-                     ,MkChunk 1 15 45 [MkPlatform (Coord 0 0, Coord 480 32) defaultPlatformRect]
+                     ,MkChunk 1 15 45 [MkPlatform (Coord 240 0, Coord 480 32) (Rectangle (0,0) (480,32))]
                      ,MkChunk 2 15 60 [MkPlatform (Coord 0 0, Coord 480 32) defaultPlatformRect])
     
     defaultPlatformRect :: Rectangle
@@ -153,7 +153,7 @@ module Util where
     toPicture (x,y,rect) bmd = Translate x y (BitmapSection rect bmd)
     
     getFrame :: Player -> [AI] -> [Platform] -> BitmapData -> Float -> Picture
-    getFrame pl enemies platforms bmp pX = Pictures (map ((flip toPicture) bmp) (getPrePicture pl enemies platforms pX))
+    getFrame pl enemies platforms bmp pX = Translate 0 screenHeightHalf (Pictures (map ((flip toPicture) bmp) (getPrePicture pl enemies platforms pX)))
 
     collision :: Hitbox -> Hitbox -> Bool
     collision h1 h2 | h2x2 < h1x1 = False
