@@ -167,7 +167,7 @@ module Util where
     toPicture (x,y,rect) bmd = Translate x y (BitmapSection rect bmd)
     
     getFrame :: Player -> [AI] -> [Platform] -> BitmapData -> Float -> Picture
-    getFrame pl enemies platforms bmp pX = Translate 0 screenHeightHalf (Pictures (map ((flip toPicture) bmp) (getPrePicture pl enemies platforms pX)))
+    getFrame pl enemies platforms bmp pX = Translate (-20.0) screenHeightHalf (Pictures (map ((flip toPicture) bmp) (getPrePicture pl enemies platforms pX)))
 
     collision :: Hitbox -> Hitbox -> Bool
     collision h1 h2 | h2x2 < h1x1 = False
