@@ -40,12 +40,12 @@ loadChunk :: String -> Int -> IO Chunk
 loadChunk path id = do
     filec <- loadFile readFile ("/src/chunks/" ++ path)
     let l = length (head (lines filec))
-    pure (MkChunk id (l * 32) 0 (l + 20 * 32) (chunkhelper filec 0 0 []))
+    pure (MkChunk id (l * 32) 0 (l + 20 * 32) (chunkhelper filec 0 19 []))
 
 chunkhelper :: String -> Int -> Int -> [Platform] -> [Platform]
 chunkhelper [] _ _ platforms = platforms
-chunkhelper (x:xs) cx cy platforms | x == '#'  = chunkhelper xs (cx + 1) cy [MkPlatform (Coord (cx * 32) ((cy - 15) * 32), Coord (cx * 32) ((cy - 1 - 15) * 32)) defaultPlatformRect] ++ platforms
-                                   | x == '\n' = chunkhelper xs 0 (cy + 1) platforms
+chunkhelper (x:xs) cx cy platforms | x == '#'  = chunkhelper xs (cx + 1) cy [MkPlatform ((Coord (cx * 32) (cy * 32)), (Coord (cx * 32) ((cy - 1) * 32) )) defaultPlatformRect] ++ platforms
+                                   | x == '\n' = chunkhelper xs 0 (cy - 1) platforms
                                    | otherwise = chunkhelper xs (cx + 1) cy platforms
 
 --Load file relative to executable
