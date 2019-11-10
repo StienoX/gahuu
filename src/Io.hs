@@ -44,7 +44,7 @@ loadChunk path id = do
 
 chunkhelper :: String -> Int -> Int -> [Platform] -> [Platform]
 chunkhelper [] _ _ platforms = platforms
-chunkhelper (x:xs) cx cy platforms | x == '#'  = chunkhelper xs (cx + 1) cy [MkPlatform (Coord (cx * 32) ((cy - 10) * 32), Coord (cx * 32) ((cy - 1 - 10) * 32)) defaultPlatformRect] ++ platforms
+chunkhelper (x:xs) cx cy platforms | x == '#'  = chunkhelper xs (cx + 1) cy [MkPlatform (Coord (cx * 32) ((cy - 15) * 32), Coord (cx * 32) ((cy - 1 - 15) * 32)) defaultPlatformRect] ++ platforms
                                    | x == '\n' = chunkhelper xs 0 (cy + 1) platforms
                                    | otherwise = chunkhelper xs (cx + 1) cy platforms
 
