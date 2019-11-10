@@ -27,7 +27,7 @@ module Util where
     pauseBackgroundColor :: Color
     pauseBackgroundColor = greyN 0.4
     speedPlayer :: Float
-    speedPlayer = 1.0
+    speedPlayer = 276.0
     jump :: Float
     jump = 2.3
     gravStrength :: Float
