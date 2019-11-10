@@ -136,6 +136,9 @@ module Util where
     playerX player = getX (pos player)
       where getX (x,_) = x
 
+    addChunkStart :: Platform -> Int -> Platform
+    addChunkStart (MkPlatform (a,b) rect) x = MkPlatform ((a + (Coord x 0)), (b + (Coord x 0))) rect
+
     platformHitbox (MkPlatform (a,b) _) = MkHitbox a b
     {--platformHitbox :: Platform -> Hitbox
     platformHitbox (MkPlatform (a,b) _) = MkHitbox pa pbrb
