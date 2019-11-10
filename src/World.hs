@@ -54,7 +54,7 @@ simPhysics :: Float -> GameState -> IO GameState
 simPhysics dT gs = pure (gs {gXOffset = playerX (gPlayer gs)})
 
 interactions :: GameState -> IO GameState
-interactions gs = pure gs
+interactions gs = pure gs {gChunks = updateChunks gs (gXOffset gs) (gChunks gs) (gRandom gs)}
 
 pauseMenu = undefined
 --pauseMenu buttons = Pictures [(Picture pauseBackgroundColor),pauseButtons buttons]
