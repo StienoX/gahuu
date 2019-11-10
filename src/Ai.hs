@@ -24,7 +24,7 @@ updateAI xs speed deltaT player = map f xs
 gravityAI :: AI -> Float -> [Hitbox] -> AI
 gravityAI ai@(MkAI AI2 _ _ _) _ _ = ai
 gravityAI (MkAI aiType aiPos aiHitbox aiRect) deltaT hitboxes | aiCollided updatedAI hitboxes = (MkAI aiType aiPos aiHitbox aiRect)
-                                                                  | otherwise                     = updatedAI
+                                                              | otherwise                     = updatedAI
   where updatedAI = MkAI aiType (posSub aiPos (0,deltaT*gravStrength)) aiHitbox aiRect
 
 --Checks if ai has collided with a hitbox

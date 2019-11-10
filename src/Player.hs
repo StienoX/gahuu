@@ -43,6 +43,9 @@ playerHitEnemy :: Player -> [Hitbox] -> Player
 playerHitEnemy player enemies | playerCollided player enemies = player {isDead = True}
                               | otherwise                     = player
 
+playerUpdateHitbox :: Player -> Player
+playerUpdateHitbox player = player {hitbox = (updateHitbox (player))}
+
 --Updates the player
 -- Player - Hitboxes - Enemies - Keypresses - deltaT -> Player
 updatePlayer :: [Hitbox] -> [Hitbox] -> Float -> Player -> Event -> Player
