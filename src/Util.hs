@@ -117,6 +117,10 @@ module Util where
     bottomRight :: Coord -> Coord
     bottomRight (Coord a b) = Coord (a + 32) (b + 32)
 
+    playerX :: Player -> Float
+    playerX player = getX (pos player)
+      where getX (x,_) = x
+
     platformHitbox (MkPlatform (a,b) _) = MkHitbox a b
     {--platformHitbox :: Platform -> Hitbox
     platformHitbox (MkPlatform (a,b) _) = MkHitbox pa pbrb
@@ -132,7 +136,7 @@ module Util where
 
     --Util coords
     toDrawCoords :: Float -> FloatCoord -> FloatCoord
-    toDrawCoords _ a = a
+    toDrawCoords x (a,b) = (a-x,b)
     --toDrawCoords pX (x,y) = ((x - (intToFloat screenWithHalf) - pX), (y - (intToFloat screenHeightHalf) ))
     
 

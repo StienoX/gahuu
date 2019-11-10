@@ -51,7 +51,7 @@ stepAI :: Float -> GameState -> IO GameState
 stepAI dT gs = pure gs
 
 simPhysics :: Float -> GameState -> IO GameState
-simPhysics dT gs = pure gs
+simPhysics dT gs = pure (gs {gXOffset = playerX (gPlayer gs)})
 
 interactions :: GameState -> IO GameState
 interactions gs = pure gs
