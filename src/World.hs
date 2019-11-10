@@ -23,7 +23,7 @@ running :: GameState -> Picture
 running = undefined
 
 step :: Float -> GameState -> IO GameState
-step dT gs | gLoaded gs == False = initTileset gs
+step dT gs | gLoaded gs == False = initGame gs
            | otherwise = do 
   gs_afterPlayer   <- parseInput dT gs
   gs_afterAI      <- stepAI dT gs_afterPlayer
@@ -31,11 +31,12 @@ step dT gs | gLoaded gs == False = initTileset gs
   gs_afterInteractions <- interactions gs_afterPhysics
   return gs_afterInteractions
 
-initTileset :: GameState -> IO GameState
-initTileset gs = do 
+initGame :: GameState -> IO GameState
+initGame gs = do 
   tilesetimg <- (loadFile readBMP "/src/img/tileset.bmp")
+  chunks <- getChunks
   let getbmp = either (undefined) (bitmapDataOfBMP) tilesetimg
-  pure (gs {gBitMapData = getbmp, gLoaded = True})
+  pure (gs {gBitMapData = getbmp, gPossibleChunks = chunks, gLoaded = True})
 
 parseInput :: Float -> GameState -> IO GameState
 parseInput dT gs = pure gs { gPlayer = foldl updP (gPlayer gs) (gKeyPresses gs), gKeyPresses = []} 
