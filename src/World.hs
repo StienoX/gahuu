@@ -3,6 +3,7 @@ import Graphics.Gloss
 import Graphics.Gloss.Interface.Pure.Game
 import Player
 import Ai
+import Io
 --import Render
 import LevelGen
 import Util
@@ -21,12 +22,18 @@ running :: GameState -> Picture
 running = undefined
 
 step :: Float -> GameState -> IO GameState
-step dT gs = do 
+step dT gs | gLoaded gs == False = initTileset gs
+           | otherwise = do 
   gs_afterPlayer   <- parseInput dT gs
   gs_afterAI      <- stepAI dT gs_afterPlayer
   gs_afterPhysics <- simPhysics dT gs_afterAI
   gs_afterInteractions <- interactions gs_afterPhysics
   return gs_afterInteractions
+
+initTileset :: GameState -> IO GameState
+initTileset gs = do 
+  tilesetimg <- loadFile loadBMP "/src/img/tileset.bmp"
+  pure (gs {gBitMapData = tilesetimg})
 
 parseInput :: Float -> GameState -> IO GameState
 parseInput dT gs = pure gs { gPlayer = foldl updP (gPlayer gs) (gKeyPresses gs), gKeyPresses = []} 

@@ -30,12 +30,12 @@ loadSave path = undefined path
 getTime :: IO Int
 getTime = undefined
 
-getChunks :: IO [Chunk]
-getChunks = do 
-    files <- listDirectory "/src/chunks"
-    let loader id [] = []
-    let loader id (x:xs) = [loadChunk x id] ++ loader (id+1) xs
-    pure (chunks)
+--getChunks :: IO [Chunk]
+--getChunks = do 
+--    files <- listDirectory "/src/chunks"
+--    let loader id [] = []
+--    let loader id (x:xs) = [loadChunk x id] ++ loader (id+1) xs
+--    pure (chunks)
 
 
 
