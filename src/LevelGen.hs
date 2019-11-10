@@ -12,7 +12,7 @@ getChunk _ _ = error "Out of range"
 --Generates new chunk based of the previous chunk and the seed
 genNextChunk :: GameState -> ActChunks -> Int -> ActChunks
 genNextChunk gs (_,x,prevChunk) seed = (x,prevChunk,newChunk)
-  where newChunk = selectedChunk {chunkStart = newstart}
+  where newChunk = selectedChunk {chunkStart = newstart, chunkUnloadPos = newstart + (chunkLength selectedChunk), chunkPlatforms = map (flip (addChunkStart) (chunkLength prevChunk)) (chunkPlatforms selectedChunk) }
         selectedChunk = (gPossibleChunks gs) !! (gRandom gs)
         newstart = (chunkStart prevChunk) + (chunkLength prevChunk)
 
