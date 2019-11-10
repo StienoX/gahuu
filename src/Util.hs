@@ -139,6 +139,9 @@ module Util where
     addChunkStart :: Platform -> Int -> Platform
     addChunkStart (MkPlatform (a,b) rect) x = MkPlatform ((a + (Coord x 0)), (b + (Coord x 0))) rect
 
+    addChunkStartRect :: Rectangle -> Int -> Rectangle
+    addChunkStartRect rect x = rect {rectPos = (posAdd (x,0) (rectPos rect))}
+
     platformHitbox (MkPlatform (a,b) _) = MkHitbox a b
     {--platformHitbox :: Platform -> Hitbox
     platformHitbox (MkPlatform (a,b) _) = MkHitbox pa pbrb
