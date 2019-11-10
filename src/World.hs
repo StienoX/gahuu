@@ -56,7 +56,7 @@ simPhysics dT gs = pure (gs {gXOffset = playerX (gPlayer gs)})
 
 interactions :: GameState -> IO GameState
 interactions gs | elem 'p' (keyDown (gEventData gs)) = pure (gs {gIsPaused = True})
-                | otherwise = pure (gs {gIsPaused = False})
+                | otherwise = pure gs {gChunks = updateChunks gs (gXOffset gs) (gChunks gs) (gRandom gs), gIsPaused = False}
 
 pauseMenu = undefined
 --pauseMenu buttons = Pictures [(Picture pauseBackgroundColor),pauseButtons buttons]
