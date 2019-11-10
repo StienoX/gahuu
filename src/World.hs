@@ -39,13 +39,12 @@ initGame gs = do
   pure (gs {gBitMapData = getbmp, gPossibleChunks = chunks, gLoaded = True})
 
 parseInput :: Float -> GameState -> IO GameState
-parseInput dT gs = pure gs { gPlayer = foldl updP (gPlayer gs) (gKeyPresses gs), gKeyPresses = []} 
+parseInput dT gs = pure gs { gPlayer = (updatePlayer phb ehb (gKeyPresses gs) dT (gPlayer gs)), gKeyPresses = []} 
   where 
     lphb (a, b, c) = map (platformHitbox) (chunkPlatforms a) ++ map (platformHitbox) (chunkPlatforms b) ++ map (platformHitbox) (chunkPlatforms c)
     phb = lphb (gChunks gs) -- Platform hitboxes
     ehb = map getEHitbox (gEnemies gs) -- Enemy hitboxes
     getEHitbox (MkAI _ _ hb _) = hb
-    updP = updatePlayer phb ehb dT -- Pre-filled in updatePlayer for foldl usage
 
 stepAI :: Float -> GameState -> IO GameState
 stepAI dT gs = pure gs
