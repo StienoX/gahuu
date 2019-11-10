@@ -32,6 +32,10 @@ module Util where
     jump = 1.0
     gravStrength :: Float
     gravStrength = 1.0
+    initialPlayer :: Player
+    initialPlayer = Player (15, 15) 0 0 0 dhb False defaultPlatformRect
+    dhb :: Hitbox
+    dhb = MkHitbox (Coord 15 15) (Coord 15 14)
 
     --Types
     type Seed = Float 
@@ -54,6 +58,7 @@ module Util where
                                  , gXOffset    :: Float
                                  , gBitMapData :: BitmapData
                                  , gPossibleChunks :: [Chunk]
+                                 , gLoaded     :: Bool
                                  }  
 
     data Player = Player { 
@@ -66,8 +71,7 @@ module Util where
         sprite :: Rectangle
     }  
 
-    initialPlayer :: Player
-    initialPlayer = Player (15, 15) 0 0 0 dhb False defaultPlatformRect
+
 
     data AI_type = AI1 | AI2 | AI3 --Possible more types if needed
         deriving (Eq)
@@ -77,9 +81,6 @@ module Util where
         start :: Coord,   --topleft corner
         end   :: Coord    --bottomright corner
     }
-    
-    dhb :: Hitbox
-    dhb = MkHitbox (Coord 15 15) (Coord 15 14)
 
     data Chunk = MkChunk { 
         chunkId        :: Int,

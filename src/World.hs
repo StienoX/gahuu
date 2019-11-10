@@ -10,7 +10,7 @@ import Util
       
 -- Initial state of the game
 initialState :: GameState
-initialState = MkGameState startingChunks initialPlayer [] False 9000 [] 15 undefined []
+initialState = MkGameState startingChunks initialPlayer [] False 9000 [] 15 undefined [] False
 --Render game
 renderGame :: GameState -> Picture
 renderGame gs = case gIsPaused gs of
