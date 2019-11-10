@@ -29,9 +29,9 @@ module Util where
     speedPlayer :: Float
     speedPlayer = 256.0
     jump :: Float
-    jump = 2.3
+    jump = 4.3
     gravStrength :: Float
-    gravStrength = 1.0
+    gravStrength = 8.0
     initialPlayer :: Player
     initialPlayer = Player (0, 64) 0 0 0 (MkHitbox (Coord 0 64) (Coord 32 96)) False defaultPlatformRect
 
