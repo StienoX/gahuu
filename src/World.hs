@@ -25,7 +25,7 @@ running = undefined
 step :: Float -> GameState -> IO GameState
 step dT gs | gLoaded gs == False = initGame gs
            | otherwise = do 
-  gs_afterPlayer   <- parseInput dT gs
+  gs_afterPlayer  <- parseInput dT gs
   gs_afterAI      <- stepAI dT gs_afterPlayer
   gs_afterPhysics <- simPhysics dT gs_afterAI
   gs_afterInteractions <- interactions gs_afterPhysics
@@ -40,7 +40,7 @@ initGame gs = do
   pure (gs {gBitMapData = getbmp, gPossibleChunks = chunks, gLoaded = True})
 
 parseInput :: Float -> GameState -> IO GameState
-parseInput dT gs = pure gs { gPlayer = (updatePlayer phb ehb (gKeyPresses gs) dT (gPlayer gs)), gKeyPresses = []} 
+parseInput dT gs = pure gs { gPlayer = (updatePlayer phb ehb (gKeyPresses gs) dT (gPlayer gs))} 
   where 
     lphb (a, b, c) = map (platformHitbox) (chunkPlatforms a) ++ map (platformHitbox) (chunkPlatforms b) ++ map (platformHitbox) (chunkPlatforms c)
     phb = lphb (gChunks gs) -- Platform hitboxes

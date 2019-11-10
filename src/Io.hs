@@ -12,7 +12,23 @@ import Util
 
 --Get the keypresses from the player
 getKeyPress :: Event -> GameState -> IO GameState
+getKeyPress (EventKey c Up _ _) gs = removeEvent c gs
+getKeyPress (EventMotion _) gs = pure gs
+getKeyPress (EventResize _) gs = pure gs
 getKeyPress e gs = return (gs {gKeyPresses = gKeyPresses gs ++ [e]})
+
+removeEvent :: Key -> GameState -> IO GameState
+removeEvent k gs = pure (gs {gKeyPresses = newEvents index} )
+    where 
+        events = gKeyPresses gs
+        newEvents (-1) = events
+        newEvents i = take (i-1) events ++ drop i events
+        index = helper k events 0
+        helper _ [] _ = (-1)
+        helper k ((EventKey c _ _ _):xs) i | c == k = i
+                                           | otherwise = helper k xs (i+1)
+        helper _ _ _ = (-1)
+
 
 --Impure view function
 view :: GameState -> IO Picture
