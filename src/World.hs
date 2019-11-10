@@ -24,6 +24,7 @@ processEvents gs = gs {gEventData = (foldl eventHandler (gEventData gs) (gKeyPre
 
 step :: Float -> GameState -> IO GameState
 step dT gs | gLoaded gs == False = initGame gs
+           | gIsPaused gs        = pauseMenu gs
            | otherwise = do 
   gs_afterPlayer  <- parseInput dT (processEvents gs)
   gs_afterAI      <- stepAI dT gs_afterPlayer
@@ -54,7 +55,8 @@ simPhysics :: Float -> GameState -> IO GameState
 simPhysics dT gs = pure (gs {gXOffset = playerX (gPlayer gs)})
 
 interactions :: GameState -> IO GameState
-interactions gs = pure gs {gChunks = updateChunks gs (gXOffset gs) (gChunks gs) (gRandom gs)}
+interactions gs | elem 'p' (keyDown (gEventData gs)) = pure (gs {gIsPaused = True})
+                | otherwise = pure gs {gChunks = updateChunks gs (gXOffset gs) (gChunks gs) (gRandom gs), gIsPaused = False}
 
 pauseMenu = undefined
 --pauseMenu buttons = Pictures [(Picture pauseBackgroundColor),pauseButtons buttons]
