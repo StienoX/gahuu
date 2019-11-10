@@ -27,7 +27,11 @@ module Util where
     pauseBackgroundColor :: Color
     pauseBackgroundColor = greyN 0.4
     speedPlayer :: Float
+<<<<<<< HEAD
     speedPlayer = 276.0
+=======
+    speedPlayer = 256.0
+>>>>>>> 9a5eb634d5e11c35e36bade7c8947dcbc32d15c5
     jump :: Float
     jump = 2.3
     gravStrength :: Float
@@ -51,7 +55,7 @@ module Util where
                                  , gPlayer     :: Player
                                  , gEnemies    :: [AI]
                                  , gIsPaused   :: Bool
-                                 , gSeed       :: Int
+                                 , gRandom       :: Int
                                  , gKeyPresses :: [Event]
                                  , gXOffset    :: Float
                                  , gBitMapData :: BitmapData
