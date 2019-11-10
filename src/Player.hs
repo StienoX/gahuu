@@ -26,7 +26,7 @@ playerMove 'w' player _      | vy player == 0 = playerUpdateHitbox (player {vy =
                              | otherwise      = player
 playerMove 'a' player deltaT = playerUpdateHitbox (player {pos = (posSub (pos player) ((deltaT*speedPlayer),0)),vx = (-deltaT*speedPlayer)})
 playerMove 'd' player deltaT = playerUpdateHitbox (player {pos = (posAdd (pos player) ((deltaT*speedPlayer),0)),vx = (deltaT*speedPlayer)})
-playerMove  _  player _      = player --Should not be used anymore
+playerMove  _  player _      = player --when p is pressed
 
 --Checks if player has collided with a hitbox
 playerCollided :: Player -> [Hitbox] -> Bool

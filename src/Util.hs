@@ -81,9 +81,11 @@ module Util where
     eventHandler ev (EventKey (Char 'w') Down _ _) = eventInsertDown ev 'w'
     eventHandler ev (EventKey (Char 'd') Down _ _) = eventInsertDown ev 'd'
     eventHandler ev (EventKey (Char 'a') Down _ _) = eventInsertDown ev 'a'
+    eventHandler ev (EventKey (Char 'p') Down _ _) = eventInsertDown ev 'p'
     eventHandler ev (EventKey (Char 'w') Up _ _)   = eventInsertUp   ev 'w'
     eventHandler ev (EventKey (Char 'd') Up _ _)   = eventInsertUp   ev 'd'
     eventHandler ev (EventKey (Char 'a') Up _ _)   = eventInsertUp   ev 'a'
+    eventHandler ev (EventKey (Char 'p') Up _ _)   = eventInsertUp   ev 'p'
     eventHandler ev _                              = ev
 
     data AI_type = AI1 | AI2 | AI3 --Possible more types if needed
