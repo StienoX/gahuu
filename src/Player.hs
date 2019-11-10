@@ -21,12 +21,12 @@ playerCollision player hitboxes | playerCollided player hitboxes = getUpdatePosP
         playervxy          = playerUpdateHitbox (player { pos = (posSub (pos player) ((vx player),(vy player))), vx = 0, vy = 0})
 
 --Updates the player position based on the keypresses provided
-playerMove :: Event -> Player -> Float -> Player
-playerMove (EventKey (Char 'w') Down _ _) player _       | vy player == 0 = playerUpdateHitbox (player {vy = ((vy player) + jump)})
-                                                         | otherwise      = player
-playerMove (EventKey (Char 'a') Down _ _)  player deltaT = playerUpdateHitbox (player {pos = (posSub (pos player) ((deltaT*speedPlayer),0)),vx = (-deltaT*speedPlayer)})
-playerMove (EventKey (Char 'd') Down _ _)  player deltaT = playerUpdateHitbox (player {pos = (posAdd (pos player) ((deltaT*speedPlayer),0)),vx = (deltaT*speedPlayer)})
-playerMove  _  player _                                  = player
+playerMove :: Char -> Player -> Float -> Player
+playerMove 'w' player _      | vy player == 0 = playerUpdateHitbox (player {vy = ((vy player) + jump)})
+                             | otherwise      = player
+playerMove 'a' player deltaT = playerUpdateHitbox (player {pos = (posSub (pos player) ((deltaT*speedPlayer),0)),vx = (-deltaT*speedPlayer)})
+playerMove 'd' player deltaT = playerUpdateHitbox (player {pos = (posAdd (pos player) ((deltaT*speedPlayer),0)),vx = (deltaT*speedPlayer)})
+playerMove  _  player _      = player --Should not be used anymore
 
 --Checks if player has collided with a hitbox
 playerCollided :: Player -> [Hitbox] -> Bool
@@ -46,10 +46,12 @@ playerHitEnemy player enemies | playerCollided player enemies = player {isDead =
 playerUpdateHitbox :: Player -> Player
 playerUpdateHitbox player = player {hitbox = (updateHitbox (pos player)(hitbox player))}
 
-playerEventHandler :: Player -> Float -> [Event] -> [Hitbox] -> Player
+
+playerEventHandler :: Player -> Float -> [Char] -> [Hitbox] -> Player
 playerEventHandler player _ [] _ = player
 playerEventHandler player deltaT (event:xs) hitboxes= playerEventHandler (playerCollision (playerMove event player deltaT) hitboxes ) deltaT xs hitboxes
+
 --Updates the player
 -- Player - Hitboxes - Enemies - Keypresses - deltaT -> Player
-updatePlayer :: [Hitbox] -> [Hitbox] -> [Event] -> Float -> Player -> Player
+updatePlayer :: [Hitbox] -> [Hitbox] -> [Char] -> Float -> Player -> Player
 updatePlayer  hitboxes enemies events deltaT player = playerUpdateHitbox (playerGravity (playerHitEnemy (playerEventHandler player deltaT events hitboxes) enemies) deltaT hitboxes) 

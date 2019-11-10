@@ -12,7 +12,7 @@ import Util
       
 -- Initial state of the game
 initialState :: GameState
-initialState = MkGameState startingChunks initialPlayer [] False 9000 [] 0 undefined [] False
+initialState = MkGameState startingChunks initialPlayer [] False 9000 [] initEventData 0 undefined [] False
 --Render game
 renderGame :: GameState -> Picture
 renderGame gs = case gIsPaused gs of
@@ -22,10 +22,13 @@ renderGame gs = case gIsPaused gs of
 running :: GameState -> Picture
 running = undefined
 
+processEvents :: GameState -> GameState
+processEvents gs = gs {gEventData = (foldl eventHandler (gEventData gs) (gKeyPresses gs)),gKeyPresses = []}
+
 step :: Float -> GameState -> IO GameState
 step dT gs | gLoaded gs == False = initGame gs
            | otherwise = do 
-  gs_afterPlayer  <- parseInput dT gs
+  gs_afterPlayer  <- parseInput dT (processEvents gs)
   gs_afterAI      <- stepAI dT gs_afterPlayer
   gs_afterPhysics <- simPhysics dT gs_afterAI
   gs_afterInteractions <- interactions gs_afterPhysics
@@ -40,7 +43,7 @@ initGame gs = do
   pure (gs {gBitMapData = getbmp, gPossibleChunks = chunks, gLoaded = True})
 
 parseInput :: Float -> GameState -> IO GameState
-parseInput dT gs = pure gs { gPlayer = (updatePlayer phb ehb (gKeyPresses gs) dT (gPlayer gs))} 
+parseInput dT gs = pure gs { gPlayer = (updatePlayer phb ehb (keyDown (gEventData gs)) dT (gPlayer gs))} 
   where 
     lphb (a, b, c) = map (platformHitbox) (chunkPlatforms a) ++ map (platformHitbox) (chunkPlatforms b) ++ map (platformHitbox) (chunkPlatforms c)
     phb = lphb (gChunks gs) -- Platform hitboxes

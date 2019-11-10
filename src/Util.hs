@@ -51,8 +51,9 @@ module Util where
                                  , gPlayer     :: Player
                                  , gEnemies    :: [AI]
                                  , gIsPaused   :: Bool
-                                 , gRandom       :: Int
+                                 , gRandom     :: Int
                                  , gKeyPresses :: [Event]
+                                 , gEventData  :: EventData
                                  , gXOffset    :: Float
                                  , gBitMapData :: BitmapData
                                  , gPossibleChunks :: [Chunk]
@@ -174,3 +175,23 @@ module Util where
     updateHitbox :: FloatCoord -> Hitbox -> Hitbox
     updateHitbox fc h = MkHitbox {start = (start h + df), end = (end h + df)}
       where df = (toCoord fc) - (start h)
+    
+    data EventData = EventData {keyDown :: [Char], keyUp :: [Char]}
+    eventHandler :: EventData -> Event -> EventData
+    eventHandler ev (EventKey (Char 'w') Down _ _) = eventInsertDown ev 'w'
+    eventHandler ev (EventKey (Char 'd') Down _ _) = eventInsertDown ev 'd'
+    eventHandler ev (EventKey (Char 'a') Down _ _) = eventInsertDown ev 'a'
+    eventHandler ev (EventKey (Char 'w') Up _ _)   = eventInsertUp   ev 'w'
+    eventHandler ev (EventKey (Char 'd') Up _ _)   = eventInsertUp   ev 'd'
+    eventHandler ev (EventKey (Char 'a') Up _ _)   = eventInsertUp   ev 'a'
+    eventHandler ev _                              = ev
+
+    eventInsertDown :: EventData -> Char -> EventData
+    eventInsertDown ev char | elem char (keyDown ev) == False = ev {keyDown = keyDown ev ++ [char], keyUp = filter (/=char) (keyUp ev)}
+                            | otherwise = ev
+    eventInsertUp   :: EventData -> Char -> EventData
+    eventInsertUp ev char   | elem char (keyUp ev) == False =  ev {keyUp = keyUp ev ++ [char], keyDown = filter (/=char) (keyDown ev)}
+                            | otherwise = ev
+
+    initEventData :: EventData
+    initEventData = EventData [] []
