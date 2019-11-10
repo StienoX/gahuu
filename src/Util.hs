@@ -33,9 +33,9 @@ module Util where
     gravStrength :: Float
     gravStrength = 1.0
     initialPlayer :: Player
-    initialPlayer = Player (15, 15) 0 0 0 dhb False defaultPlatformRect
+    initialPlayer = Player (0, 0) 0 0 0 dhb False defaultPlatformRect
     dhb :: Hitbox
-    dhb = MkHitbox (Coord 15 15) (Coord 15 14)
+    dhb = MkHitbox (Coord 0 0) (Coord 32 32)
 
     --Types
     type Seed = Float 
@@ -90,9 +90,9 @@ module Util where
     }
     
     startingChunks :: ActChunks
-    startingChunks = (MkChunk 0 15 30 [MkPlatform (Coord 0 18, Coord 15 20) defaultPlatformRect]
-                     ,MkChunk 1 15 45 [MkPlatform (Coord 0 18, Coord 15 20) defaultPlatformRect, MkPlatform (Coord 5 12, Coord 10 12) defaultPlatformRect]
-                     ,MkChunk 2 15 60 [MkPlatform (Coord 0 18, Coord 15 20) defaultPlatformRect])
+    startingChunks = (MkChunk 0 15 30 [MkPlatform (Coord 0 576, Coord 480 640) defaultPlatformRect]
+                     ,MkChunk 1 15 45 [MkPlatform (Coord 0 576, Coord 480 640) defaultPlatformRect, MkPlatform (Coord 5 12, Coord 10 12) defaultPlatformRect]
+                     ,MkChunk 2 15 60 [MkPlatform (Coord 0 576, Coord 480 640) defaultPlatformRect])
     
     defaultPlatformRect :: Rectangle
     defaultPlatformRect = Rectangle (0,0) (32,32)
@@ -133,7 +133,9 @@ module Util where
 
     --Util coords
     toDrawCoords :: Float -> FloatCoord -> FloatCoord
-    toDrawCoords pX (x,y) = ((x - (intToFloat screenWithHalf) - pX), (y - (intToFloat screenHeightHalf) ))
+    toDrawCoords _ a = a
+    --toDrawCoords pX (x,y) = ((x - (intToFloat screenWithHalf) - pX), (y - (intToFloat screenHeightHalf) ))
+    
 
     getPrePicture :: Player -> [AI] -> [Platform] -> Float -> [(Float,Float,Rectangle)]
     getPrePicture player enemies platforms pX = [getTupleElement getPlayerPos getPlayerRectangle] ++ (map getEnemyTuple enemies) ++ (map getPlatformTuple platforms)
