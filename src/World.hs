@@ -1,6 +1,7 @@
 module World where
 import Graphics.Gloss
 import Graphics.Gloss.Interface.Pure.Game
+import Codec.BMP
 import Player
 import Ai
 import Io
@@ -32,8 +33,9 @@ step dT gs | gLoaded gs == False = initTileset gs
 
 initTileset :: GameState -> IO GameState
 initTileset gs = do 
-  tilesetimg <- loadFile loadBMP "/src/img/tileset.bmp"
-  pure (gs {gBitMapData = tilesetimg})
+  tilesetimg <- (loadFile readBMP "/src/img/tileset.bmp")
+  let getbmp = either (undefined) (bitmapDataOfBMP) tilesetimg
+  pure (gs {gBitMapData = getbmp})
 
 parseInput :: Float -> GameState -> IO GameState
 parseInput dT gs = pure gs { gPlayer = foldl updP (gPlayer gs) (gKeyPresses gs), gKeyPresses = []} 
