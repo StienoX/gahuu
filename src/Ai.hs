@@ -8,17 +8,17 @@ import Numeric.Extra
 
 --Processes the behavior for the provided ai
 processAI :: AI -> Float -> Player -> [Hitbox] -> Maybe AI
-processAI ai@(MkAI AI1 aiPos hitbox rect) speed player hitboxes | (flipTuple aiPos) > (intToFloat screenHeight,0)                                   = Nothing
+processAI ai@(MkAI AI1 aiPos hitbox rect) speed player hitboxes | (flipTuple aiPos) < ((-32.0),0)                                                              = Nothing
                                                                 | posSub aiPos (pos player) < (0,0) && (aiCollided (moveAI ai posSub speed) hitboxes == False) = Just (moveAI ai posSub speed)
-                                                                | aiCollided (moveAI ai posAdd speed) hitboxes == False                             = Just (moveAI ai posAdd speed)
-                                                                | otherwise                                                                         = Just (ai)
+                                                                | aiCollided (moveAI ai posAdd speed) hitboxes == False                                        = Just (moveAI ai posAdd speed)
+                                                                | otherwise                                                                                    = Just (ai)
 
-processAI (MkAI AI2 aiPos hitbox rect) speed player _                                                                                               = Just (updateHitboxAI (MkAI AI2 (posMul speed (posAdd (posSub (pos player) aiPos) aiPos)) hitbox rect))
+processAI (MkAI AI2 aiPos hitbox rect) speed player _ = Just (updateHitboxAI (MkAI AI2 (posMul speed (posAdd (posSub (pos player) aiPos) aiPos)) hitbox rect))
 
-processAI ai@(MkAI AI3 aiPos hitbox rect) speed player hitboxes | (flipTuple aiPos) > (intToFloat screenHeight,0)                                   = Nothing
-                                                                | posSub aiPos (pos player) < (0,0) && (aiCollided (moveAI ai posAdd speed) hitboxes == False ) = Just (moveAI ai posAdd speed)
-                                                                | aiCollided (moveAI ai posSub speed) hitboxes == False                                    = Just (moveAI ai posSub speed)
-                                                                | otherwise                                                                         = Just (ai)
+processAI ai@(MkAI AI3 aiPos hitbox rect) speed player hitboxes | (flipTuple aiPos) < ((-32.0),0)                                                              = Nothing
+                                                                | posSub aiPos (pos player) < (0,0) && (aiCollided (moveAI ai posAdd speed) hitboxes == False) = Just (moveAI ai posAdd speed)
+                                                                | aiCollided (moveAI ai posSub speed) hitboxes == False                                        = Just (moveAI ai posSub speed)
+                                                                | otherwise                                                                                    = Just (ai)
 --Processes all ai behavior
 updateAI :: [AI] -> Float -> Float -> Player -> [Hitbox] -> [AI]
 updateAI xs speed deltaT player platforms = map fgai (mapMaybe fpai xs)
