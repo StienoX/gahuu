@@ -31,7 +31,7 @@ module Util where
     speedPlayer :: Float
     speedPlayer = 256.0
     jump :: Float
-    jump = 6.3
+    jump = 8.3
     gravStrength :: Float
     gravStrength = 11.0
     initialPlayer :: Player
@@ -107,8 +107,8 @@ module Util where
     
     startingChunks :: ActChunks
     startingChunks = (MkChunk 0 (5 * 32) 0         (5 * 32) [MkPlatform (Coord 0 0, Coord 480 32) defaultPlatformRect]
-                     ,MkChunk 1 (10 * 32) (5 * 32) (10 * 32) [MkPlatform (Coord 240 0, Coord 480 32) (Rectangle (0,0) (480,32))]
-                     ,MkChunk 2 (15 * 32) (5 * 32) (20 * 32) [MkPlatform (Coord 0 0, Coord 480 32) defaultPlatformRect])
+                     ,MkChunk 1 (10 * 32) (5 * 32) (20 * 32) [MkPlatform (Coord 240 0, Coord 480 32) (Rectangle (0,0) (480,32))]
+                     ,MkChunk 2 (15 * 32) (5 * 32) (30 * 32) [MkPlatform (Coord 0 0, Coord 480 32) defaultPlatformRect])
     
     defaultPlatformRect :: Rectangle
     defaultPlatformRect = Rectangle (0,0) (32,32)
