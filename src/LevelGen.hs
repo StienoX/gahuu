@@ -1,10 +1,6 @@
 module LevelGen where
 import Util
-
-
-
-platformHitbox :: Platform -> Hitbox
-platformHitbox (a,b) = MkHitbox a b
+import System.Random
 
 --Returns chunk based on index
 getChunk :: Int -> ActChunks -> Chunk
@@ -18,15 +14,15 @@ genNextChunk :: ActChunks -> Seed -> ActChunks
 genNextChunk (_,x,prevChunk) seed = (x,prevChunk,genPlatforms newChunk seed)
   where newChunk = undefined
 
+rollDice :: Int -> IO Int
+rollDice max = getStdRandom (randomR (1,max))
+
 --Generates new platforms for a new chunk
 genPlatforms :: Chunk -> Seed -> Chunk
 --genPlatforms (MkChunk chkId len rootPos endPos _ []) seed = undefined
 genPlatforms = undefined
 
 --Checks if new chunks need to be generated and unload old chunks
-updateChunks :: Player -> ActChunks -> Seed -> ActChunks
-updateChunks player chunks seed | (floor (playerX playerPos)) > (chunkUnloadPos (getChunk 0 chunks)) = updateChunks player (genNextChunk chunks seed) seed
-                                | otherwise = chunks
-  where playerPos = pos player
-        playerX :: FloatCoord -> Float   
-        playerX (x,_) = x
+updateChunks :: Float -> ActChunks -> Seed -> ActChunks
+updateChunks xoffset chunks seed | (floor (xoffset)) > (chunkUnloadPos (getChunk 0 chunks)) = updateChunks xoffset (genNextChunk chunks seed) seed
+                                 | otherwise = chunks
