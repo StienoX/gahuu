@@ -35,7 +35,7 @@ initTileset :: GameState -> IO GameState
 initTileset gs = do 
   tilesetimg <- (loadFile readBMP "/src/img/tileset.bmp")
   let getbmp = either (undefined) (bitmapDataOfBMP) tilesetimg
-  pure (gs {gBitMapData = getbmp})
+  pure (gs {gBitMapData = getbmp, gLoaded = True})
 
 parseInput :: Float -> GameState -> IO GameState
 parseInput dT gs = pure gs { gPlayer = foldl updP (gPlayer gs) (gKeyPresses gs), gKeyPresses = []} 
