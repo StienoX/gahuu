@@ -54,4 +54,4 @@ playerEventHandler player deltaT (event:xs) hitboxes= playerEventHandler (player
 --Updates the player
 -- Player - Hitboxes - Enemies - Keypresses - deltaT -> Player
 updatePlayer :: [Hitbox] -> [Hitbox] -> [Char] -> Float -> Player -> Player
-updatePlayer  hitboxes enemies events deltaT player = playerUpdateHitbox (playerGravity (playerHitEnemy (playerEventHandler player deltaT events hitboxes) enemies) deltaT hitboxes) 
+updatePlayer  hitboxes enemies events deltaT player = playerGravity (playerHitEnemy (playerEventHandler player deltaT events hitboxes) enemies) deltaT hitboxes

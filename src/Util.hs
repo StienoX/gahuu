@@ -11,7 +11,7 @@ module Util where
     screenWith :: Int
     screenWith = 480
     screenWithHalf :: Float
-    screenWithHalf   = (-1*intToFloat (screenWith `div` 2) + 96)
+    screenWithHalf   = (-1*intToFloat (screenWith `div` 2))
     screenHeightHalf :: Float
     screenHeightHalf = (-1*intToFloat (screenHeight `div` 2 - 96))
     windowName :: String
@@ -26,15 +26,21 @@ module Util where
     backgroundColor = blue
     pauseBackgroundColor :: Color
     pauseBackgroundColor = greyN 0.4
+    speedAI :: Float
+    speedAI = 120.0
     speedPlayer :: Float
     speedPlayer = 256.0
     jump :: Float
-    jump = 4.3
+    jump = 6.3
     gravStrength :: Float
-    gravStrength = 8.0
+    gravStrength = 11.0
     initialPlayer :: Player
     initialPlayer = Player (0, 64) 0 0 0 (MkHitbox (Coord 0 64) (Coord 32 96)) False defaultPlatformRect
-
+    initialEnemies :: [AI]
+    initialEnemies = [(MkAI AI3 (400,64) (MkHitbox (Coord 400 64) (Coord 432 96)) defaultPlatformRect)]
+    initialState :: GameState
+    initialState = MkGameState startingChunks initialPlayer initialEnemies False 9000 [] initEventData 0 undefined [] False
+    
     --Types
     type Seed = Float 
     data Platform = MkPlatform (Coord, Coord) Rectangle
@@ -70,7 +76,15 @@ module Util where
         sprite :: Rectangle
     }  
 
-
+    data EventData = EventData {keyDown :: [Char], keyUp :: [Char]}
+    eventHandler :: EventData -> Event -> EventData
+    eventHandler ev (EventKey (Char 'w') Down _ _) = eventInsertDown ev 'w'
+    eventHandler ev (EventKey (Char 'd') Down _ _) = eventInsertDown ev 'd'
+    eventHandler ev (EventKey (Char 'a') Down _ _) = eventInsertDown ev 'a'
+    eventHandler ev (EventKey (Char 'w') Up _ _)   = eventInsertUp   ev 'w'
+    eventHandler ev (EventKey (Char 'd') Up _ _)   = eventInsertUp   ev 'd'
+    eventHandler ev (EventKey (Char 'a') Up _ _)   = eventInsertUp   ev 'a'
+    eventHandler ev _                              = ev
 
     data AI_type = AI1 | AI2 | AI3 --Possible more types if needed
         deriving (Eq)
@@ -175,16 +189,6 @@ module Util where
     updateHitbox :: FloatCoord -> Hitbox -> Hitbox
     updateHitbox fc h = MkHitbox {start = (start h + df), end = (end h + df)}
       where df = (toCoord fc) - (start h)
-    
-    data EventData = EventData {keyDown :: [Char], keyUp :: [Char]}
-    eventHandler :: EventData -> Event -> EventData
-    eventHandler ev (EventKey (Char 'w') Down _ _) = eventInsertDown ev 'w'
-    eventHandler ev (EventKey (Char 'd') Down _ _) = eventInsertDown ev 'd'
-    eventHandler ev (EventKey (Char 'a') Down _ _) = eventInsertDown ev 'a'
-    eventHandler ev (EventKey (Char 'w') Up _ _)   = eventInsertUp   ev 'w'
-    eventHandler ev (EventKey (Char 'd') Up _ _)   = eventInsertUp   ev 'd'
-    eventHandler ev (EventKey (Char 'a') Up _ _)   = eventInsertUp   ev 'a'
-    eventHandler ev _                              = ev
 
     eventInsertDown :: EventData -> Char -> EventData
     eventInsertDown ev char | elem char (keyDown ev) == False = ev {keyDown = keyDown ev ++ [char], keyUp = filter (/=char) (keyUp ev)}

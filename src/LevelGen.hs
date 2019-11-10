@@ -23,9 +23,6 @@ genPlatforms :: Chunk -> Seed -> Chunk
 genPlatforms = undefined
 
 --Checks if new chunks need to be generated and unload old chunks
-updateChunks :: Player -> ActChunks -> Seed -> ActChunks
-updateChunks player chunks seed | (floor (playerX playerPos)) > (chunkUnloadPos (getChunk 0 chunks)) = updateChunks player (genNextChunk chunks seed) seed
-                                | otherwise = chunks
-  where playerPos = pos player
-        playerX :: FloatCoord -> Float   
-        playerX (x,_) = x
+updateChunks :: Float -> ActChunks -> Seed -> ActChunks
+updateChunks xoffset chunks seed | (floor (xoffset)) > (chunkUnloadPos (getChunk 0 chunks)) = updateChunks player (genNextChunk chunks seed) seed
+                                 | otherwise = chunks

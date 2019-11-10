@@ -9,10 +9,7 @@ import Io
 import LevelGen
 import Util
 
-      
--- Initial state of the game
-initialState :: GameState
-initialState = MkGameState startingChunks initialPlayer [] False 9000 [] initEventData 0 undefined [] False
+
 --Render game
 renderGame :: GameState -> Picture
 renderGame gs = case gIsPaused gs of
@@ -51,8 +48,8 @@ parseInput dT gs = pure gs { gPlayer = (updatePlayer phb ehb (keyDown (gEventDat
     getEHitbox (MkAI _ _ hb _) = hb
 
 stepAI :: Float -> GameState -> IO GameState
-stepAI dT gs = pure gs
-
+stepAI dT gs = pure gs {gEnemies = (updateAI (gEnemies gs) speedAI dT (gPlayer gs) ( map platformHitbox (getPlatforms (gChunks gs)))) } 
+--updateAI xs speed deltaT player platforms
 simPhysics :: Float -> GameState -> IO GameState
 simPhysics dT gs = pure (gs {gXOffset = playerX (gPlayer gs)})
 
