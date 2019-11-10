@@ -2,6 +2,7 @@ module Util where
 
     import Graphics.Gloss.Interface.Pure.Game
     import Graphics.Gloss.Data.Bitmap
+    import Graphics.Gloss.Data.Picture
     import Numeric.Extra
 
     --Settings
@@ -101,6 +102,9 @@ module Util where
     toCoord :: FloatCoord -> Coord
     toCoord (x,y) = Coord {cx = round x, cy = round y}
 
+    toFloatCoord :: Coord -> FloatCoord
+    toFloatCoord (Coord a b) = ((intToFloat a),(intToFloat b))
+
     posSub :: Num a => (a,a) -> (a,a) -> (a,a)
     posSub (a,b) (c,d) = (a - c,b - d)
     
@@ -126,8 +130,8 @@ module Util where
     flipTuple (a,b) = (b,a)
 
     --Util coords
-    toDrawCoords :: Float -> Coord -> Coord
-    toDrawCoords pX Coord {cx = x,cy = y} = Coord (x - screenWithHalf - (round pX)) (y - screenHeightHalf) 
+    toDrawCoords :: Float -> FloatCoord -> FloatCoord
+    toDrawCoords pX (x,y) = ((x - (intToFloat screenWithHalf) - pX), (y - (intToFloat screenHeightHalf) ))
 
     getPrePicture :: Player -> [AI] -> [Platform] -> [(Float,Float,Rectangle)]
     getPrePicture player enemies platforms = [getTupleElement getPlayerPos getPlayerRectangle] ++ (map getEnemyTuple enemies) ++ (map getPlatformTuple platforms)
@@ -138,7 +142,7 @@ module Util where
             getTupleElement (a,b) rect                = (a,b,rect)
 
     toPicture :: (Float,Float,Rectangle) -> BitmapData -> Picture
-    toPicture (x,y,rect) bmd = undefined
+    toPicture (x,y,rect) bmd = Translate x y (BitmapSection rect bmd)
     
     getFrame :: Player -> [AI] -> [Platform] -> BitmapData -> Picture
     getFrame pl enemies platforms bmp = Pictures (map ((flip toPicture) bmp) (getPrePicture pl enemies platforms))
