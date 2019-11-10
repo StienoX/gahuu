@@ -22,7 +22,7 @@ playerCollision player hitboxes | playerCollided player hitboxes = getUpdatePosP
 
 --Updates the player position based on the keypresses provided
 playerMove :: Event -> Player -> Float -> Player
-playerMove (EventKey (Char 'w') Down _ _) player _       | vy player == 0 = playerUpdateHitbox (player {vprev = (vy player) + jump, vy = (vy player) + jump})
+playerMove (EventKey (Char 'w') Down _ _) player _       | vy player == 0 = playerUpdateHitbox (player {vy = ((vy player) + jump)})
                                                          | otherwise      = player
 playerMove (EventKey (Char 'a') Down _ _)  player deltaT = playerUpdateHitbox (player {pos = (posSub (pos player) ((deltaT*speedPlayer),0)),vx = (deltaT*speedPlayer)})
 playerMove (EventKey (Char 'd') Down _ _)  player deltaT = playerUpdateHitbox (player {pos = (posAdd (pos player) ((deltaT*speedPlayer),0)),vx = (-deltaT*speedPlayer)})
@@ -34,9 +34,9 @@ playerCollided player hitboxes = elem True (map (collision (hitbox player)) hitb
 
 --Updates player based on gravity
 playerGravity :: Player -> Float -> [Hitbox] -> Player
-playerGravity player deltaT hitboxes | playerCollided updatedPlayer hitboxes = player {vprev = 0}
+playerGravity player deltaT hitboxes | playerCollided updatedPlayer hitboxes = player {vy = 0}
                                      | otherwise                             = updatedPlayer
-  where updatedPlayer = player {pos = posSub (pos player) (0,(deltaT*gravStrength-(vprev player))), vprev = (vprev player - deltaT*gravStrength)}
+  where updatedPlayer = playerUpdateHitbox (player {pos = posSub (pos player) (0,(deltaT*gravStrength-(vy player))), vy = (vy player - deltaT*gravStrength)})
 
 --Checks if player is by an enemy
 playerHitEnemy :: Player -> [Hitbox] -> Player

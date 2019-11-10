@@ -27,13 +27,13 @@ module Util where
     pauseBackgroundColor :: Color
     pauseBackgroundColor = greyN 0.4
     speedPlayer :: Float
-    speedPlayer = 330.0
+    speedPlayer = 1.0
     jump :: Float
-    jump = 1.0
+    jump = 2.3
     gravStrength :: Float
     gravStrength = 1.0
     initialPlayer :: Player
-    initialPlayer = Player (0, 641) 0 660 0 (MkHitbox (Coord 0 641) (Coord 32 671)) False defaultPlatformRect
+    initialPlayer = Player (0, 64) 0 0 0 (MkHitbox (Coord 0 64) (Coord 32 96)) False defaultPlatformRect
 
     --Types
     type Seed = Float 
@@ -88,9 +88,9 @@ module Util where
     }
     
     startingChunks :: ActChunks
-    startingChunks = (MkChunk 0 15 30 [MkPlatform (Coord 0 576, Coord 480 640) defaultPlatformRect]
-                     ,MkChunk 1 15 45 [MkPlatform (Coord 0 576, Coord 480 640) defaultPlatformRect, MkPlatform (Coord 5 12, Coord 10 12) defaultPlatformRect]
-                     ,MkChunk 2 15 60 [MkPlatform (Coord 0 576, Coord 480 640) defaultPlatformRect])
+    startingChunks = (MkChunk 0 15 30 [MkPlatform (Coord 0 0, Coord 480 32) defaultPlatformRect]
+                     ,MkChunk 1 15 45 [MkPlatform (Coord 0 0, Coord 480 32) defaultPlatformRect]
+                     ,MkChunk 2 15 60 [MkPlatform (Coord 0 0, Coord 480 32) defaultPlatformRect])
     
     defaultPlatformRect :: Rectangle
     defaultPlatformRect = Rectangle (0,0) (32,32)
