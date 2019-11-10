@@ -106,9 +106,9 @@ module Util where
     }
     
     startingChunks :: ActChunks
-    startingChunks = (MkChunk 0 15 0 30 [MkPlatform (Coord 0 0, Coord 480 32) defaultPlatformRect]
-                     ,MkChunk 1 15 15 45 [MkPlatform (Coord 240 0, Coord 480 32) (Rectangle (0,0) (480,32))]
-                     ,MkChunk 2 15 30 60 [MkPlatform (Coord 0 0, Coord 480 32) defaultPlatformRect])
+    startingChunks = (MkChunk 0 (15 * 32) 0         (30 * 32) [MkPlatform (Coord 0 0, Coord 480 32) defaultPlatformRect]
+                     ,MkChunk 1 (15 * 32) (15 * 32) (45 * 32) [MkPlatform (Coord 240 0, Coord 480 32) (Rectangle (0,0) (480,32))]
+                     ,MkChunk 2 (15 * 32) (30 * 32) (60 * 32) [MkPlatform (Coord 0 0, Coord 480 32) defaultPlatformRect])
     
     defaultPlatformRect :: Rectangle
     defaultPlatformRect = Rectangle (0,0) (32,32)

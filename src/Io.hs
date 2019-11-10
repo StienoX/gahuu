@@ -27,10 +27,6 @@ viewPure gs = getFrame (gPlayer gs) (gEnemies gs) (getPlatforms (gChunks gs)) (g
 loadSave :: String -> IO GameState
 loadSave path = undefined path
 
---Get the systemtime
-getTime :: IO Int
-getTime = undefined
-
 getChunks :: IO [Chunk]
 getChunks = do 
     files <- loadFile listDirectory "/src/chunks"
@@ -44,11 +40,13 @@ loadChunk :: String -> Int -> IO Chunk
 loadChunk path id = do
     filec <- loadFile readFile ("/src/chunks/" ++ path)
     let l = length (head (lines filec))
-    let chunkhelper [] _ _ platforms = platforms
-    let chunkhelper (x:xs) cx cy platforms | x == '#'  = chunkhelper xs (cx + 1) cy [MkPlatform (Coord cx cy, Coord cx cy) defaultPlatformRect] ++ platforms
-                                           | x == '\n' = chunkhelper xs 0 (cy + 1) platforms
-                                           | otherwise = chunkhelper xs (cx + 1) cy platforms
-    pure (MkChunk id (l * 32) 0 (l + 20) (chunkhelper filec 1 1 []))
+    pure (MkChunk id (l * 32) 0 (l + 20 * 32) (chunkhelper filec 0 0 []))
+
+chunkhelper :: String -> Int -> Int -> [Platform] -> [Platform]
+chunkhelper [] _ _ platforms = platforms
+chunkhelper (x:xs) cx cy platforms | x == '#'  = chunkhelper xs (cx + 1) cy [MkPlatform (Coord (cx * 32) (cy * 32), Coord (cx * 32) (cy * 32)) defaultPlatformRect] ++ platforms
+                                   | x == '\n' = chunkhelper xs 0 (cy + 1) platforms
+                                   | otherwise = chunkhelper xs (cx + 1) cy platforms
 
 --Load file relative to executable
 loadFile :: (String -> IO a) -> String -> IO a
