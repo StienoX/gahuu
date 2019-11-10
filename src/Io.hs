@@ -16,11 +16,11 @@ getKeyPress e gs = return (gs {gKeyPresses = gKeyPresses gs ++ [e]})
 
 --Impure view function
 view :: GameState -> IO Picture
-view g = loadFile loadBMP "/src/img/Dirt.bmp"  -- return (viewPure g)
+view g = return (viewPure g) -- return (viewPure g)
 
 --Pure view function
 viewPure :: GameState -> Picture
-viewPure gstate = undefined
+viewPure gs = getFrame (gPlayer gs) (gEnemies gs) (getPlatforms (gChunks gs)) (gBitMapData gs) (gXOffset gs)
 
 --Loads save
 loadSave :: String -> IO GameState

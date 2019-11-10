@@ -51,7 +51,7 @@ module Util where
                                  , gIsPaused   :: Bool
                                  , gSeed       :: Int
                                  , gKeyPresses :: [Event]
-                                 , gXOffset    :: Int
+                                 , gXOffset    :: Float
                                  , gBitMapData :: BitmapData
                                  , gPossibleChunks :: [Chunk]
                                  }  
@@ -128,6 +128,9 @@ module Util where
 
     flipTuple :: (a,b) -> (b,a)
     flipTuple (a,b) = (b,a)
+
+    getPlatforms :: ActChunks -> [Platform]
+    getPlatforms (c0,c1,c2) = chunkPlatforms c0 ++ chunkPlatforms c1 ++ chunkPlatforms c2
 
     --Util coords
     toDrawCoords :: Float -> FloatCoord -> FloatCoord
